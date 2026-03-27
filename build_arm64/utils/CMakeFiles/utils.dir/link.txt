@@ -1,0 +1,2 @@
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar qc libutils.a CMakeFiles/utils.dir/sutils.cpp.o CMakeFiles/utils.dir/threadtool/threadpool.cpp.o
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ranlib libutils.a

@@ -1,0 +1,2 @@
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar qc libmemtool.a CMakeFiles/memtool.dir/membase.cpp.o CMakeFiles/memtool.dir/memextend.cpp.o
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ranlib libmemtool.a

@@ -1,0 +1,12 @@
+/home/coldxi/Project/cfindBase/build_arm64/CMakeFiles/BaseSniper.dir
+/home/coldxi/Project/cfindBase/build_arm64/CMakeFiles/edit_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/CMakeFiles/rebuild_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/utils/CMakeFiles/utils.dir
+/home/coldxi/Project/cfindBase/build_arm64/utils/CMakeFiles/edit_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/utils/CMakeFiles/rebuild_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/memtool/CMakeFiles/memtool.dir
+/home/coldxi/Project/cfindBase/build_arm64/memtool/CMakeFiles/edit_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/memtool/CMakeFiles/rebuild_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/chainer/CMakeFiles/chainer.dir
+/home/coldxi/Project/cfindBase/build_arm64/chainer/CMakeFiles/edit_cache.dir
+/home/coldxi/Project/cfindBase/build_arm64/chainer/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,2 @@
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar qc libchainer.a CMakeFiles/chainer.dir/ccformat.cpp.o CMakeFiles/chainer.dir/ccscan.cpp.o
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ranlib libchainer.a
