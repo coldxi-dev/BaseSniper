@@ -14,7 +14,7 @@ size_t chainer::cscan<T>::get_pointers(T start, T end, bool rest, int count, int
 }
 
 template <class T>
-size_t chainer::cscan<T>::scan_pointer_chain(std::vector<T> &addr, int depth, size_t offset, bool limit, size_t plim, FILE *outstream)
+size_t chainer::cscan<T>::scan_pointer_chain(std::vector<T> &addr, int depth, int min_level, size_t offset, bool limit, size_t plim, FILE *outstream)
 {
     if (addr.empty())
         return 0;
@@ -61,11 +61,23 @@ size_t chainer::cscan<T>::scan_pointer_chain(std::vector<T> &addr, int depth, si
 
     printf("\nsearch and associate finish, spend: %fs, start filter pointers\n", ptimer.get() / 1000000.0);
 
-    auto [counts, contents] = this->build_pointer_dirs_tree(dirs, ranges);
+    std::vector<chainer::pointer_range<T>> save_ranges;
+    save_ranges.reserve(ranges.size());
+    for (auto &r : ranges) {
+        if (r.level >= min_level)
+            save_ranges.emplace_back(std::move(r));
+    }
+
+    if (save_ranges.empty()) {
+        printf("no chains matched min level filter: %d\n", min_level);
+        return count;
+    }
+
+    auto [counts, contents] = this->build_pointer_dirs_tree(dirs, save_ranges);
     if (counts.size() == 0 || contents.size() == 0)
         return count;
 
-    for (auto &r : ranges) {
+    for (auto &r : save_ranges) {
         auto temp = 0ul;
         auto &ccount = counts[r.level];
         for (auto &v : r.results)
@@ -74,7 +86,7 @@ size_t chainer::cscan<T>::scan_pointer_chain(std::vector<T> &addr, int depth, si
         count += temp;
         printf("find %lu chains from %d %s[%d]\n", temp, r.level, r.vma->name, r.vma->count);
     }
-    this->integr_data_to_file(contents, ranges, outstream);
+    this->integr_data_to_file(contents, save_ranges, outstream);
 
     printf("\nfinish write into file, total spend: %fs\n", ptimer.get() / 1000000.0);
     return count;

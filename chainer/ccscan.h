@@ -14,7 +14,7 @@ struct cscan : public ::chainer::scan<T>
 {
     size_t get_pointers(T start, T end, bool rest, int count, int size);
 
-    size_t scan_pointer_chain(std::vector<T> &addr, int depth, size_t offset, bool limit, size_t plim, FILE *outstream);
+    size_t scan_pointer_chain(std::vector<T> &addr, int depth, int min_level, size_t offset, bool limit, size_t plim, FILE *outstream);
 
     cscan();
 

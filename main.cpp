@@ -4,6 +4,7 @@
 
 #include <getopt.h>
 #include <inttypes.h>
+#include <cctype>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string>
@@ -23,10 +24,12 @@ struct scan_params {
     uint64_t    address     = 0;
     bool        has_address = false;
     int         depth       = 8;
+    int         min_level   = 0;
     size_t      offset      = 2048;
     int         threads     = 10;
     int         block_size  = 1 << 20; // 1MB
     int         mem_types   = memtool::Anonymous | memtool::C_bss | memtool::C_data;
+    std::string base_module;
     std::string output      = DEFAULT_OUTPUT_PATH;
     std::string format_path;
 };
@@ -48,9 +51,11 @@ static void print_usage(const char *prog)
         "  Scan:\n"
         "    -a, --address <addr>    Target address to scan (hex, e.g. 0x784701F1C0)\n"
         "    -d, --depth <n>         Pointer chain depth (default: 8)\n"
+        "    -L, --min-level <n>     Do not save chains below this level (default: 0)\n"
         "    -r, --range <n>         Max offset range per level (default: 2048)\n"
         "    -t, --threads <n>       Thread count (default: 10)\n"
         "    -s, --block-size <n>    Memory block size (default: 1048576 = 1MB)\n"
+        "    -M, --module <names>    Base module filter, comma separated (e.g. libUE4.so,libanogs.so)\n"
         "\n"
         "  Memory type (can combine multiple):\n"
         "    -m, --mem <types>       Memory types, comma separated:\n"
@@ -76,7 +81,7 @@ static void print_usage(const char *prog)
         "\n"
         "  Examples:\n"
         "    %s -p com.example.app -a 0x784701F1C0 -d 8 -r 2048\n"
-        "    %s -P 12345 -a 0x784701F1C0 -d 10 -r 4096 -m A,Ca,Cb,Cd -o result.bin\n"
+        "    %s -P 12345 -a 0x784701F1C0 -d 10 -r 4096 -m A,Ca,Cb,Cd -M libUE4.so -o result.bin\n"
         "    %s -P 12345 -a 0x784701F1C0 -m all\n"
         "\n",
         prog, prog, prog, prog);
@@ -164,6 +169,138 @@ static void normalize_params_paths(scan_params &p)
 
     if (!p.format_path.empty())
         p.format_path = normalize_path_in_base_dir(p.format_path, "BaseSniper_result.txt");
+}
+
+static std::string trim_string(const std::string &input)
+{
+    const char *spaces = " \t\r\n";
+    size_t start = input.find_first_not_of(spaces);
+    if (start == std::string::npos)
+        return "";
+
+    size_t end = input.find_last_not_of(spaces);
+    return input.substr(start, end - start + 1);
+}
+
+static std::string normalize_module_name(const std::string &input)
+{
+    std::string trimmed = trim_string(input);
+    if (trimmed.empty())
+        return "";
+
+    const char *name = path_filename(trimmed.c_str());
+    return *name == '\0' ? trimmed : std::string(name);
+}
+
+static std::vector<std::string> split_module_filters(const std::string &input)
+{
+    std::vector<std::string> filters;
+    size_t start = 0;
+
+    while (start <= input.size()) {
+        size_t end = input.find(',', start);
+        std::string part = input.substr(start, end == std::string::npos ? std::string::npos : end - start);
+        std::string name = normalize_module_name(part);
+        if (!name.empty())
+            filters.emplace_back(std::move(name));
+
+        if (end == std::string::npos)
+            break;
+        start = end + 1;
+    }
+
+    return filters;
+}
+
+static std::string join_module_filters(const std::vector<std::string> &filters)
+{
+    std::string result;
+
+    for (const auto &filter : filters) {
+        if (!result.empty())
+            result += ",";
+        result += filter;
+    }
+
+    return result;
+}
+
+static std::string normalize_module_filter_list(const std::string &input)
+{
+    std::string trimmed = trim_string(input);
+    if (trimmed.empty() || trimmed == "all" || trimmed == "ALL" || trimmed == "*" || trimmed == "全部")
+        return "";
+
+    return join_module_filters(split_module_filters(trimmed));
+}
+
+static void normalize_scan_params(scan_params &p)
+{
+    normalize_params_paths(p);
+    if (p.min_level < 0)
+        p.min_level = 0;
+    p.base_module = normalize_module_filter_list(p.base_module);
+}
+
+static bool is_pid_input(const std::string &input)
+{
+    if (input.empty())
+        return false;
+
+    for (char ch : input) {
+        if (!std::isdigit(static_cast<unsigned char>(ch)))
+            return false;
+    }
+
+    return true;
+}
+
+static void set_target(scan_params &p, const std::string &input)
+{
+    if (is_pid_input(input)) {
+        p.pid = atoi(input.c_str());
+        p.package.clear();
+        return;
+    }
+
+    p.package = input;
+    p.pid = -1;
+}
+
+static std::string current_target_label(const scan_params &p)
+{
+    if (p.pid != -1)
+        return std::string("PID:") + std::to_string(p.pid);
+    if (!p.package.empty())
+        return std::string("包名:") + p.package;
+    return "(未设置)";
+}
+
+static void set_base_module_filter(scan_params &p, const std::string &input)
+{
+    p.base_module = normalize_module_filter_list(input);
+}
+
+static int apply_base_module_filter(const std::string &module_names)
+{
+    std::vector<std::string> filters = split_module_filters(module_names);
+    int matched = 0;
+
+    for (auto module : memtool::extend::vm_static_list) {
+        bool enabled = filters.empty();
+        for (const auto &filter : filters) {
+            if (strstr(module->name, filter.c_str()) != nullptr) {
+                enabled = true;
+                break;
+            }
+        }
+
+        module->filter = !enabled;
+        if (enabled)
+            ++matched;
+    }
+
+    return matched;
 }
 
 static const char *mem_types_to_string(int types)
@@ -278,10 +415,13 @@ static bool save_config(const scan_params &p, const char *path)
     if (p.has_address)
         fprintf(f, "address=%" PRIx64 "\n", p.address);
     fprintf(f, "depth=%d\n", p.depth);
+    fprintf(f, "min_level=%d\n", p.min_level);
     fprintf(f, "offset=%zu\n", p.offset);
     fprintf(f, "threads=%d\n", p.threads);
     fprintf(f, "block_size=%d\n", p.block_size);
     fprintf(f, "mem_types=%s\n", mem_types_to_string(p.mem_types));
+    if (!p.base_module.empty())
+        fprintf(f, "base_module=%s\n", p.base_module.c_str());
     fprintf(f, "output=%s\n", p.output.c_str());
     if (!p.format_path.empty())
         fprintf(f, "format=%s\n", p.format_path.c_str());
@@ -320,6 +460,7 @@ static bool load_config(scan_params &p, const char *path)
         else if (strcmp(key, "pid") == 0)         { p.pid = atoi(val); p.package.clear(); }
         else if (strcmp(key, "address") == 0)     { p.address = strtoull(val, nullptr, 16); p.has_address = true; }
         else if (strcmp(key, "depth") == 0)        p.depth = atoi(val);
+        else if (strcmp(key, "min_level") == 0)    p.min_level = atoi(val);
         else if (strcmp(key, "offset") == 0)       p.offset = strtoull(val, nullptr, 10);
         else if (strcmp(key, "threads") == 0)      p.threads = atoi(val);
         else if (strcmp(key, "block_size") == 0)   p.block_size = atoi(val);
@@ -327,12 +468,13 @@ static bool load_config(scan_params &p, const char *path)
             int mt = parse_mem_types(val);
             if (mt != -1) p.mem_types = mt;
         }
+        else if (strcmp(key, "base_module") == 0)  p.base_module = val;
         else if (strcmp(key, "output") == 0)       p.output = val;
         else if (strcmp(key, "format") == 0)       p.format_path = val;
     }
 
     fclose(f);
-    normalize_params_paths(p);
+    normalize_scan_params(p);
     return true;
 }
 
@@ -340,7 +482,7 @@ static bool load_config(scan_params &p, const char *path)
 
 static int do_scan(scan_params &p)
 {
-    normalize_params_paths(p);
+    normalize_scan_params(p);
 
     // ---------- resolve PID ----------
     if (p.pid != -1) {
@@ -357,9 +499,11 @@ static int do_scan(scan_params &p)
     printf("[*] PID:        %d\n", memtool::base::target_pid);
     printf("[*] Address:    0x%" PRIx64 "\n", p.address);
     printf("[*] Depth:      %d\n", p.depth);
+    printf("[*] Min level:  %d\n", p.min_level);
     printf("[*] Range:      %zu\n", p.offset);
     printf("[*] Threads:    %d\n", p.threads);
     printf("[*] Block size: %d\n", p.block_size);
+    printf("[*] Base mod:   %s\n", p.base_module.empty() ? "all" : p.base_module.c_str());
     printf("[*] Output:     %s\n", p.output.c_str());
     printf("\n");
 
@@ -367,7 +511,17 @@ static int do_scan(scan_params &p)
     chainer::cscan<uint64_t> scanner;
 
     memtool::extend::get_target_mem();
+    int matched_modules = apply_base_module_filter(p.base_module);
     memtool::extend::set_mem_ranges(p.mem_types);
+
+    if (!p.base_module.empty()) {
+        if (matched_modules == 0) {
+            fprintf(stderr, "[!] No base module matched: %s\n", p.base_module.c_str());
+            return 1;
+        }
+
+        printf("[*] Matched base modules: %d\n", matched_modules);
+    }
 
     // ---------- scan pointers ----------
     printf("[*] Scanning pointers...\n");
@@ -395,7 +549,7 @@ static int do_scan(scan_params &p)
     }
 
     printf("[*] Scanning pointer chains (depth=%d, range=%zu)...\n", p.depth, p.offset);
-    size_t chain_count = scanner.scan_pointer_chain(addr, p.depth, p.offset, false, 0, fout);
+    size_t chain_count = scanner.scan_pointer_chain(addr, p.depth, p.min_level, p.offset, false, 0, fout);
     fclose(fout);
 
     printf("[*] Found %zu chains\n", chain_count);
@@ -428,7 +582,7 @@ static int do_scan(scan_params &p)
 
 static int do_format(scan_params &p)
 {
-    normalize_params_paths(p);
+    normalize_scan_params(p);
 
     std::string bin_path = normalize_path_in_base_dir(p.output, "BaseSniper_result.bin");
     std::string input = read_line("[?] 输入 .bin 文件名 (固定目录: /sdcard/BaseSniper) [" +
@@ -500,38 +654,84 @@ static void verify_chain_recursive(
 
 // 运行时验证: 从 static base 开始，沿着偏移链逐级 readv 目标进程内存，
 // 检查最终读到的地址是否等于 target_addr
-// root_addr: 链顶层的静态指针地址
-// offsets: 每一级的偏移量，从外到内
-// target_addr: 期望最终指向的地址
-static bool verify_chain_runtime(
-    uint64_t root_addr, const std::vector<size_t> &offsets, uint64_t target_addr)
+struct runtime_filter_progress {
+    size_t total = 0;
+    size_t last_percent = 0;
+    bool printed = false;
+};
+
+static size_t count_runtime_chain_recursive(
+    int level,
+    chainer::cprog_data<uint64_t> &dat,
+    std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents)
 {
-    uint64_t cur = root_addr;
-    for (size_t i = 0; i < offsets.size(); ++i) {
-        uint64_t val = 0;
-        long ret = memtool::base::readv(cur, &val, sizeof(val));
-        if (ret <= 0) return false;
-        cur = val + offsets[i];
+    if (level == 0)
+        return 1;
+
+    size_t count = 0;
+    for (auto i = dat.start; i < dat.end; ++i) {
+        count += count_runtime_chain_recursive(level - 1, contents[level - 1][i], contents);
     }
-    return cur == target_addr;
+
+    return count;
+}
+
+static size_t count_runtime_child_chains(
+    int level,
+    chainer::cprog_data<uint64_t> &dat,
+    std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents)
+{
+    if (level <= 0)
+        return 1;
+
+    size_t count = 0;
+    for (auto i = dat.start; i < dat.end; ++i) {
+        count += count_runtime_chain_recursive(level - 1, contents[level - 1][i], contents);
+    }
+
+    return count;
+}
+
+static void print_runtime_filter_progress(
+    size_t total_count, size_t valid_count,
+    runtime_filter_progress &progress)
+{
+    if (progress.total == 0)
+        return;
+
+    size_t percent = (total_count * 100) / progress.total;
+    if (progress.printed && percent == progress.last_percent && total_count != progress.total)
+        return;
+
+    progress.last_percent = percent;
+    progress.printed = true;
+
+    printf("\r[*] 过滤进度: %zu%% (%zu/%zu), 有效: %zu",
+           percent, total_count, progress.total, valid_count);
+    fflush(stdout);
+
+    if (total_count == progress.total)
+        printf("\n");
 }
 
 // 递归收集偏移并验证
 // root_addr: 链顶层的静态指针地址 (不变，一直传递下去)
+// current_addr: 当前前缀解析到的地址
 static void verify_chain_runtime_recursive(
     int level,
     chainer::cprog_data<uint64_t> &dat,
     std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
     uint64_t root_addr,
+    uint64_t current_addr,
     uint64_t sym_start, const char *sym_name, int sym_count,
     uint64_t target_addr,
     std::vector<size_t> &offset_stack,
-    FILE *out_f, size_t &valid_count, size_t &total_count)
+    FILE *out_f, size_t &valid_count, size_t &total_count,
+    runtime_filter_progress &progress)
 {
     if (level == 0) {
         ++total_count;
-        // root_addr 是链顶层的静态地址, offset_stack 是从外到内的偏移
-        if (verify_chain_runtime(root_addr, offset_stack, target_addr)) {
+        if (current_addr == target_addr) {
             char buf[500];
             int pos = sprintf(buf, "%s[%d] + 0x%lX",
                               sym_name, sym_count, (size_t)(root_addr - sym_start));
@@ -540,25 +740,38 @@ static void verify_chain_runtime_recursive(
             }
             pos += sprintf(buf + pos, " = %lx\n", (size_t)target_addr);
             fwrite(buf, pos, 1, out_f);
+            fflush(out_f);
             ++valid_count;
         }
-    } else {
-        for (auto i = dat.start; i < dat.end; ++i) {
-            size_t off = (size_t)(contents[level - 1][i].address - dat.value);
-            offset_stack.push_back(off);
-            verify_chain_runtime_recursive(level - 1, contents[level - 1][i], contents,
-                                           root_addr,
-                                           sym_start, sym_name, sym_count,
-                                           target_addr, offset_stack,
-                                           out_f, valid_count, total_count);
-            offset_stack.pop_back();
-        }
+
+        print_runtime_filter_progress(total_count, valid_count, progress);
+        return;
+    }
+
+    uint64_t value = 0;
+    long ret = memtool::base::readv(current_addr, &value, sizeof(value));
+    if (ret <= 0) {
+        total_count += count_runtime_child_chains(level, dat, contents);
+        print_runtime_filter_progress(total_count, valid_count, progress);
+        return;
+    }
+
+    for (auto i = dat.start; i < dat.end; ++i) {
+        auto &next = contents[level - 1][i];
+        size_t off = (size_t)(next.address - dat.value);
+        offset_stack.push_back(off);
+        verify_chain_runtime_recursive(level - 1, next, contents,
+                                       root_addr, value + off,
+                                       sym_start, sym_name, sym_count,
+                                       target_addr, offset_stack,
+                                       out_f, valid_count, total_count, progress);
+        offset_stack.pop_back();
     }
 }
 
 static int do_filter(scan_params &p)
 {
-    normalize_params_paths(p);
+    normalize_scan_params(p);
 
     // 输入 bin 文件
     std::string bin_path = normalize_path_in_base_dir(p.output, "BaseSniper_result.bin");
@@ -638,23 +851,37 @@ static int do_filter(scan_params &p)
         return 1;
     }
 
+    if (runtime_mode)
+        setvbuf(fout, nullptr, _IONBF, 0);
+
     printf("[*] 过滤中... 目标地址: 0x%" PRIx64 " 模式: %s\n",
            target_addr, runtime_mode ? "运行时验证" : "静态验证");
 
     size_t valid_count = 0;
     size_t total_count = 0;
+    runtime_filter_progress progress;
 
     if (runtime_mode) {
         // 运行时验证: 逐级 readv 目标进程
+        for (auto &sym : syms) {
+            for (auto &dat : sym.data) {
+                progress.total += count_runtime_chain_recursive(sym.sym->level, dat, contents);
+            }
+        }
+
+        printf("[*] 待验证链数: %zu\n", progress.total);
+        print_runtime_filter_progress(0, 0, progress);
+
         for (auto &sym : syms) {
             for (auto &dat : sym.data) {
                 std::vector<size_t> offset_stack;
                 verify_chain_runtime_recursive(
                     sym.sym->level, dat, contents,
                     dat.address,  // root_addr: 链顶层的静态指针地址
+                    dat.address,
                     sym.sym->start, sym.sym->name, sym.sym->count,
                     target_addr, offset_stack,
-                    fout, valid_count, total_count);
+                    fout, valid_count, total_count, progress);
             }
         }
     } else {
@@ -701,16 +928,17 @@ static void print_params(const scan_params &p)
     snprintf(addr_buf, sizeof(addr_buf), "0x%" PRIx64, p.address);
 
     printf("\n  ┌─ 当前参数 ─────────────────────────────┐\n");
-    printf("  │  1. 包名:      %-24s │\n", p.package.empty() ? "(未设置)" : p.package.c_str());
-    printf("  │  2. PID:       %-24d │\n", p.pid);
-    printf("  │  3. 目标地址:  %-24s │\n", p.has_address ? addr_buf : "(未设置)");
-    printf("  │  4. 层级:      %-24d │\n", p.depth);
+    printf("  │  1. 目标:      %-24s │\n", current_target_label(p).c_str());
+    printf("  │  2. 目标地址:  %-24s │\n", p.has_address ? addr_buf : "(未设置)");
+    printf("  │  3. 层级:      %-24d │\n", p.depth);
+    printf("  │  4. 最小层级:  %-24d │\n", p.min_level);
     printf("  │  5. 偏移:      %-24zu │\n", p.offset);
     printf("  │  6. 线程数:    %-24d │\n", p.threads);
     printf("  │  7. 块大小:    %-24d │\n", p.block_size);
     printf("  │  8. 内存类型:  %-24s │\n", mem_types_to_string(p.mem_types));
-    printf("  │  9. 输出文件:  %-24s │\n", p.output.c_str());
-    printf("  │ 10. 格式化:    %-24s │\n", p.format_path.empty() ? "(未启用)" : p.format_path.c_str());
+    printf("  │  9. 基址模块:  %-24s │\n", p.base_module.empty() ? "(全部)" : p.base_module.c_str());
+    printf("  │ 10. 输出文件:  %-24s │\n", p.output.c_str());
+    printf("  │ 11. 格式化:    %-24s │\n", p.format_path.empty() ? "(未启用)" : p.format_path.c_str());
     printf("  └──────────────────────────────────────────┘\n\n");
 }
 
@@ -720,11 +948,12 @@ static void interactive_set_params(scan_params &p)
         print_params(p);
 
         printf(
-            "  [1]  设置包名          [6]  设置线程数\n"
-            "  [2]  设置PID           [7]  设置块大小\n"
-            "  [3]  设置目标地址      [8]  设置内存类型\n"
-            "  [4]  设置层级          [9]  设置输出文件\n"
-            "  [5]  设置偏移          [10] 设置格式化文件\n"
+            "  [1]  设置目标          [7]  设置块大小\n"
+            "  [2]  设置目标地址      [8]  设置内存类型\n"
+            "  [3]  设置层级          [9]  设置基址模块\n"
+            "  [4]  设置最小层级      [10] 设置输出文件\n"
+            "  [5]  设置偏移          [11] 设置格式化文件\n"
+            "  [6]  设置线程数\n"
             "  [s]  保存配置          [l]  加载配置\n"
             "  [0]  返回上级菜单\n"
             "\n");
@@ -736,19 +965,19 @@ static void interactive_set_params(scan_params &p)
         std::string input;
 
         if (choice == "1") {
-            input = read_line("  包名 [" + (p.package.empty() ? std::string("未设置") : p.package) + "]: ");
-            if (!input.empty()) { p.package = input; p.pid = -1; }
+            input = read_line("  目标 (输入数字为PID，否则为包名) [" + current_target_label(p) + "]: ");
+            if (!input.empty()) set_target(p, input);
         } else if (choice == "2") {
-            input = read_line("  PID [" + std::to_string(p.pid) + "]: ");
-            if (!input.empty()) { p.pid = atoi(input.c_str()); p.package.clear(); }
-        } else if (choice == "3") {
             char buf[32];
             snprintf(buf, sizeof(buf), "%" PRIx64, p.address);
             input = read_line(std::string("  目标地址 (十六进制) [0x") + buf + "]: ");
             if (!input.empty()) { p.address = strtoull(input.c_str(), nullptr, 16); p.has_address = true; }
-        } else if (choice == "4") {
+        } else if (choice == "3") {
             input = read_line("  层级 [" + std::to_string(p.depth) + "]: ");
             if (!input.empty()) p.depth = atoi(input.c_str());
+        } else if (choice == "4") {
+            input = read_line("  最小层级 [" + std::to_string(p.min_level) + "]: ");
+            if (!input.empty()) p.min_level = atoi(input.c_str());
         } else if (choice == "5") {
             input = read_line("  偏移 [" + std::to_string(p.offset) + "]: ");
             if (!input.empty()) p.offset = strtoull(input.c_str(), nullptr, 10);
@@ -767,17 +996,22 @@ static void interactive_set_params(scan_params &p)
                 else fprintf(stderr, "  [!] 无效的内存类型，保持原值\n");
             }
         } else if (choice == "9") {
+            input = read_line("  基址模块 (如 libUE4.so,libanogs.so，输入 all 清除) [" +
+                              (p.base_module.empty() ? std::string("全部") : p.base_module) + "]: ");
+            if (!input.empty())
+                set_base_module_filter(p, input);
+        } else if (choice == "10") {
             input = read_line("  输出文件名 (固定保存到 /sdcard/BaseSniper) [" +
                               std::string(path_filename(p.output.c_str())) + "]: ");
             if (!input.empty())
                 p.output = normalize_path_in_base_dir(input, "BaseSniper_result.bin");
-        } else if (choice == "10") {
+        } else if (choice == "11") {
             input = read_line("  格式化文件名 (固定保存到 /sdcard/BaseSniper) [" +
                               (p.format_path.empty() ? std::string("未启用") : std::string(path_filename(p.format_path.c_str()))) + "]: ");
             if (!input.empty())
                 p.format_path = normalize_path_in_base_dir(input, "BaseSniper_result.txt");
         } else if (choice == "s" || choice == "S") {
-            normalize_params_paths(p);
+            normalize_scan_params(p);
             if (save_config(p, DEFAULT_CONFIG_PATH))
                 printf("  [*] 配置已保存到: %s\n", DEFAULT_CONFIG_PATH);
         } else if (choice == "l" || choice == "L") {
@@ -884,9 +1118,11 @@ int main(int argc, char *argv[])
         {"pid",        required_argument, 0, 'P'},
         {"address",    required_argument, 0, 'a'},
         {"depth",      required_argument, 0, 'd'},
+        {"min-level",  required_argument, 0, 'L'},
         {"range",      required_argument, 0, 'r'},
         {"threads",    required_argument, 0, 't'},
         {"block-size", required_argument, 0, 's'},
+        {"module",     required_argument, 0, 'M'},
         {"mem",        required_argument, 0, 'm'},
         {"output",     required_argument, 0, 'o'},
         {"format",     required_argument, 0, 'f'},
@@ -895,15 +1131,17 @@ int main(int argc, char *argv[])
     };
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "p:P:a:d:r:t:s:m:o:f:h", long_options, nullptr)) != -1) {
+    while ((opt = getopt_long(argc, argv, "p:P:a:d:L:r:t:s:M:m:o:f:h", long_options, nullptr)) != -1) {
         switch (opt) {
             case 'p': p.package     = optarg; break;
             case 'P': p.pid         = atoi(optarg); break;
             case 'a': p.address     = strtoull(optarg, nullptr, 16); p.has_address = true; break;
             case 'd': p.depth       = atoi(optarg); break;
+            case 'L': p.min_level   = atoi(optarg); break;
             case 'r': p.offset      = strtoull(optarg, nullptr, 10); break;
             case 't': p.threads     = atoi(optarg); break;
             case 's': p.block_size  = atoi(optarg); break;
+            case 'M': p.base_module = optarg; break;
             case 'm': p.mem_types   = parse_mem_types(optarg); break;
             case 'o': p.output      = optarg; break;
             case 'f': p.format_path = optarg; break;
@@ -912,7 +1150,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    normalize_params_paths(p);
+    normalize_scan_params(p);
 
     if (p.mem_types == -1)
         return 1;
