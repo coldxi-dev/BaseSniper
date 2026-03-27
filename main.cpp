@@ -660,33 +660,44 @@ struct runtime_filter_progress {
     bool printed = false;
 };
 
-static size_t count_runtime_chain_recursive(
+static std::vector<std::vector<size_t>> build_runtime_subtree_counts(
+    const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents)
+{
+    std::vector<std::vector<size_t>> subtree_counts(contents.size());
+    if (contents.empty())
+        return subtree_counts;
+
+    for (size_t level = 0; level < contents.size(); ++level)
+        subtree_counts[level].resize(contents[level].size(), 0);
+
+    for (size_t i = 0; i < contents[0].size(); ++i)
+        subtree_counts[0][i] = 1;
+
+    for (size_t level = 1; level < contents.size(); ++level) {
+        for (size_t i = 0; i < contents[level].size(); ++i) {
+            const auto &dat = contents[level][i];
+            size_t count = 0;
+            for (uint32_t child = dat.start; child < dat.end; ++child) {
+                count += subtree_counts[level - 1][child];
+            }
+            subtree_counts[level][i] = count;
+        }
+    }
+
+    return subtree_counts;
+}
+
+static size_t get_runtime_chain_count_for_node(
     int level,
-    chainer::cprog_data<uint64_t> &dat,
-    std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents)
+    const chainer::cprog_data<uint64_t> &dat,
+    const std::vector<std::vector<size_t>> &subtree_counts)
 {
     if (level == 0)
         return 1;
 
     size_t count = 0;
-    for (auto i = dat.start; i < dat.end; ++i) {
-        count += count_runtime_chain_recursive(level - 1, contents[level - 1][i], contents);
-    }
-
-    return count;
-}
-
-static size_t count_runtime_child_chains(
-    int level,
-    chainer::cprog_data<uint64_t> &dat,
-    std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents)
-{
-    if (level <= 0)
-        return 1;
-
-    size_t count = 0;
-    for (auto i = dat.start; i < dat.end; ++i) {
-        count += count_runtime_chain_recursive(level - 1, contents[level - 1][i], contents);
+    for (uint32_t child = dat.start; child < dat.end; ++child) {
+        count += subtree_counts[level - 1][child];
     }
 
     return count;
@@ -712,6 +723,7 @@ static void print_runtime_filter_progress(
 
     if (total_count == progress.total)
         printf("\n");
+
 }
 
 // 递归收集偏移并验证
@@ -719,15 +731,17 @@ static void print_runtime_filter_progress(
 // current_addr: 当前前缀解析到的地址
 static void verify_chain_runtime_recursive(
     int level,
-    chainer::cprog_data<uint64_t> &dat,
-    std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
+    const chainer::cprog_data<uint64_t> &dat,
+    const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
+    const std::vector<std::vector<size_t>> &subtree_counts,
     uint64_t root_addr,
     uint64_t current_addr,
     uint64_t sym_start, const char *sym_name, int sym_count,
     uint64_t target_addr,
     std::vector<size_t> &offset_stack,
     FILE *out_f, size_t &valid_count, size_t &total_count,
-    runtime_filter_progress &progress)
+    runtime_filter_progress &progress,
+    size_t subtree_total)
 {
     if (level == 0) {
         ++total_count;
@@ -751,20 +765,21 @@ static void verify_chain_runtime_recursive(
     uint64_t value = 0;
     long ret = memtool::base::readv(current_addr, &value, sizeof(value));
     if (ret <= 0) {
-        total_count += count_runtime_child_chains(level, dat, contents);
+        total_count += subtree_total;
         print_runtime_filter_progress(total_count, valid_count, progress);
         return;
     }
 
-    for (auto i = dat.start; i < dat.end; ++i) {
-        auto &next = contents[level - 1][i];
+    for (uint32_t i = dat.start; i < dat.end; ++i) {
+        const auto &next = contents[level - 1][i];
         size_t off = (size_t)(next.address - dat.value);
         offset_stack.push_back(off);
-        verify_chain_runtime_recursive(level - 1, next, contents,
+        verify_chain_runtime_recursive(level - 1, next, contents, subtree_counts,
                                        root_addr, value + off,
                                        sym_start, sym_name, sym_count,
                                        target_addr, offset_stack,
-                                       out_f, valid_count, total_count, progress);
+                                       out_f, valid_count, total_count, progress,
+                                       subtree_counts[level - 1][i]);
         offset_stack.pop_back();
     }
 }
@@ -838,6 +853,9 @@ static int do_filter(scan_params &p)
     }
 
     // 解析 bin 数据
+    printf("[*] 正在解析 bin 数据...\n");
+    fflush(stdout);
+
     chainer::cformat<uint64_t> formatter;
     auto chain_data = formatter.parse_cprog_bin_data(fin);
     fclose(fin);
@@ -863,9 +881,13 @@ static int do_filter(scan_params &p)
 
     if (runtime_mode) {
         // 运行时验证: 逐级 readv 目标进程
+        printf("[*] 正在统计链数...\n");
+        fflush(stdout);
+
+        auto subtree_counts = build_runtime_subtree_counts(contents);
         for (auto &sym : syms) {
             for (auto &dat : sym.data) {
-                progress.total += count_runtime_chain_recursive(sym.sym->level, dat, contents);
+                progress.total += get_runtime_chain_count_for_node(sym.sym->level, dat, subtree_counts);
             }
         }
 
@@ -875,13 +897,15 @@ static int do_filter(scan_params &p)
         for (auto &sym : syms) {
             for (auto &dat : sym.data) {
                 std::vector<size_t> offset_stack;
+                offset_stack.reserve(sym.sym->level > 0 ? sym.sym->level : 1);
                 verify_chain_runtime_recursive(
-                    sym.sym->level, dat, contents,
-                    dat.address,  // root_addr: 链顶层的静态指针地址
+                    sym.sym->level, dat, contents, subtree_counts,
+                    dat.address,
                     dat.address,
                     sym.sym->start, sym.sym->name, sym.sym->count,
                     target_addr, offset_stack,
-                    fout, valid_count, total_count, progress);
+                    fout, valid_count, total_count, progress,
+                    get_runtime_chain_count_for_node(sym.sym->level, dat, subtree_counts));
             }
         }
     } else {
