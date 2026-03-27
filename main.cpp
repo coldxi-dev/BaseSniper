@@ -4,7 +4,11 @@
 
 #include <getopt.h>
 #include <inttypes.h>
+#include <atomic>
+#include <chrono>
 #include <cctype>
+#include <mutex>
+#include <thread>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string>
@@ -656,8 +660,36 @@ static void verify_chain_recursive(
 // 检查最终读到的地址是否等于 target_addr
 struct runtime_filter_progress {
     size_t total = 0;
-    size_t last_percent = 0;
+    size_t last_basis_points = 0;
+    size_t last_count = 0;
+    std::chrono::steady_clock::time_point last_report_at {};
     bool printed = false;
+};
+
+struct runtime_filter_task {
+    int level = 0;
+    const chainer::cprog_data<uint64_t> *dat = nullptr;
+    uint64_t root_addr = 0;
+    uint64_t sym_start = 0;
+    const char *sym_name = nullptr;
+    int sym_count = 0;
+    size_t subtree_total = 0;
+};
+
+struct runtime_filter_shared_state {
+    FILE *out_f = nullptr;
+    std::atomic_size_t total_count {0};
+    std::atomic_size_t valid_count {0};
+    runtime_filter_progress progress;
+    std::mutex progress_mutex;
+    std::mutex output_mutex;
+};
+
+struct runtime_filter_worker_state {
+    std::vector<size_t> offset_stack;
+    size_t pending_total = 0;
+    size_t pending_valid = 0;
+    std::chrono::steady_clock::time_point last_sync_at = std::chrono::steady_clock::now();
 };
 
 static std::vector<std::vector<size_t>> build_runtime_subtree_counts(
@@ -710,78 +742,141 @@ static void print_runtime_filter_progress(
     if (progress.total == 0)
         return;
 
-    size_t percent = (total_count * 100) / progress.total;
-    if (progress.printed && percent == progress.last_percent && total_count != progress.total)
+    const auto now = std::chrono::steady_clock::now();
+    const long double percent = (long double)total_count * 100.0L / (long double)progress.total;
+    const size_t basis_points = (size_t)(percent * 100.0L);
+    const bool final_update = total_count == progress.total;
+    const bool percent_changed = !progress.printed || basis_points != progress.last_basis_points;
+    const bool timed_update = progress.printed && total_count != progress.last_count &&
+                              std::chrono::duration_cast<std::chrono::milliseconds>(now - progress.last_report_at).count() >= 500;
+
+    if (!percent_changed && !timed_update && !final_update)
         return;
 
-    progress.last_percent = percent;
+    progress.last_basis_points = basis_points;
+    progress.last_count = total_count;
+    progress.last_report_at = now;
     progress.printed = true;
 
-    printf("\r[*] 过滤进度: %zu%% (%zu/%zu), 有效: %zu",
-           percent, total_count, progress.total, valid_count);
+    if (percent < 0.01L) {
+        printf("\r[*] 过滤进度: %.6Lf%% (%zu/%zu), 有效: %zu",
+               percent, total_count, progress.total, valid_count);
+    } else if (percent < 1.0L) {
+        printf("\r[*] 过滤进度: %.4Lf%% (%zu/%zu), 有效: %zu",
+               percent, total_count, progress.total, valid_count);
+    } else {
+        printf("\r[*] 过滤进度: %.2Lf%% (%zu/%zu), 有效: %zu",
+               percent, total_count, progress.total, valid_count);
+    }
     fflush(stdout);
 
-    if (total_count == progress.total)
+    if (final_update)
         printf("\n");
+}
 
+static void flush_runtime_filter_worker_state(
+    runtime_filter_shared_state &shared,
+    runtime_filter_worker_state &worker,
+    bool force)
+{
+    const bool has_pending = worker.pending_total != 0 || worker.pending_valid != 0;
+    const auto now = std::chrono::steady_clock::now();
+    const bool should_flush = force || worker.pending_valid != 0 || worker.pending_total >= 1024 ||
+                              std::chrono::duration_cast<std::chrono::milliseconds>(now - worker.last_sync_at).count() >= 200;
+
+    if (!has_pending || !should_flush)
+        return;
+
+    size_t total_count = shared.total_count.fetch_add(worker.pending_total, std::memory_order_relaxed) + worker.pending_total;
+    size_t valid_count = shared.valid_count.fetch_add(worker.pending_valid, std::memory_order_relaxed) + worker.pending_valid;
+
+    worker.pending_total = 0;
+    worker.pending_valid = 0;
+    worker.last_sync_at = now;
+
+    std::lock_guard<std::mutex> lock(shared.progress_mutex);
+    print_runtime_filter_progress(total_count, valid_count, shared.progress);
+}
+
+static void write_runtime_filter_match(
+    const runtime_filter_task &task,
+    uint64_t target_addr,
+    const std::vector<size_t> &offset_stack,
+    runtime_filter_shared_state &shared)
+{
+    char buf[500];
+    int pos = sprintf(buf, "%s[%d] + 0x%lX",
+                      task.sym_name, task.sym_count, (size_t)(task.root_addr - task.sym_start));
+    for (auto &off : offset_stack) {
+        pos += sprintf(buf + pos, " -> + 0x%lX", off);
+    }
+    pos += sprintf(buf + pos, " = %lx\n", (size_t)target_addr);
+
+    std::lock_guard<std::mutex> lock(shared.output_mutex);
+    fwrite(buf, pos, 1, shared.out_f);
 }
 
 // 递归收集偏移并验证
-// root_addr: 链顶层的静态指针地址 (不变，一直传递下去)
 // current_addr: 当前前缀解析到的地址
 static void verify_chain_runtime_recursive(
     int level,
     const chainer::cprog_data<uint64_t> &dat,
     const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
     const std::vector<std::vector<size_t>> &subtree_counts,
-    uint64_t root_addr,
+    const runtime_filter_task &task,
     uint64_t current_addr,
-    uint64_t sym_start, const char *sym_name, int sym_count,
     uint64_t target_addr,
-    std::vector<size_t> &offset_stack,
-    FILE *out_f, size_t &valid_count, size_t &total_count,
-    runtime_filter_progress &progress,
+    runtime_filter_shared_state &shared,
+    runtime_filter_worker_state &worker,
     size_t subtree_total)
 {
     if (level == 0) {
-        ++total_count;
+        ++worker.pending_total;
         if (current_addr == target_addr) {
-            char buf[500];
-            int pos = sprintf(buf, "%s[%d] + 0x%lX",
-                              sym_name, sym_count, (size_t)(root_addr - sym_start));
-            for (auto &off : offset_stack) {
-                pos += sprintf(buf + pos, " -> + 0x%lX", off);
-            }
-            pos += sprintf(buf + pos, " = %lx\n", (size_t)target_addr);
-            fwrite(buf, pos, 1, out_f);
-            fflush(out_f);
-            ++valid_count;
+            write_runtime_filter_match(task, target_addr, worker.offset_stack, shared);
+            ++worker.pending_valid;
         }
 
-        print_runtime_filter_progress(total_count, valid_count, progress);
+        flush_runtime_filter_worker_state(shared, worker, false);
         return;
     }
 
     uint64_t value = 0;
     long ret = memtool::base::readv(current_addr, &value, sizeof(value));
     if (ret <= 0) {
-        total_count += subtree_total;
-        print_runtime_filter_progress(total_count, valid_count, progress);
+        worker.pending_total += subtree_total;
+        flush_runtime_filter_worker_state(shared, worker, false);
         return;
     }
 
     for (uint32_t i = dat.start; i < dat.end; ++i) {
         const auto &next = contents[level - 1][i];
         size_t off = (size_t)(next.address - dat.value);
-        offset_stack.push_back(off);
+        worker.offset_stack.push_back(off);
         verify_chain_runtime_recursive(level - 1, next, contents, subtree_counts,
-                                       root_addr, value + off,
-                                       sym_start, sym_name, sym_count,
-                                       target_addr, offset_stack,
-                                       out_f, valid_count, total_count, progress,
-                                       subtree_counts[level - 1][i]);
-        offset_stack.pop_back();
+                                       task, value + off, target_addr,
+                                       shared, worker, subtree_counts[level - 1][i]);
+        worker.offset_stack.pop_back();
     }
+}
+
+static void process_runtime_filter_task(
+    const runtime_filter_task &task,
+    const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
+    const std::vector<std::vector<size_t>> &subtree_counts,
+    uint64_t target_addr,
+    runtime_filter_shared_state &shared,
+    runtime_filter_worker_state &worker)
+{
+    worker.offset_stack.clear();
+    size_t reserve_count = task.level > 0 ? (size_t)task.level : 1;
+    if (worker.offset_stack.capacity() < reserve_count)
+        worker.offset_stack.reserve(reserve_count);
+
+    verify_chain_runtime_recursive(task.level, *task.dat, contents, subtree_counts,
+                                   task, task.root_addr, target_addr,
+                                   shared, worker, task.subtree_total);
+    flush_runtime_filter_worker_state(shared, worker, true);
 }
 
 static int do_filter(scan_params &p)
@@ -877,7 +972,6 @@ static int do_filter(scan_params &p)
 
     size_t valid_count = 0;
     size_t total_count = 0;
-    runtime_filter_progress progress;
 
     if (runtime_mode) {
         // 运行时验证: 逐级 readv 目标进程
@@ -885,29 +979,69 @@ static int do_filter(scan_params &p)
         fflush(stdout);
 
         auto subtree_counts = build_runtime_subtree_counts(contents);
+        size_t task_count = 0;
+        for (auto &sym : syms) {
+            task_count += sym.data.size();
+        }
+
+        std::vector<runtime_filter_task> tasks;
+        tasks.reserve(task_count);
         for (auto &sym : syms) {
             for (auto &dat : sym.data) {
-                progress.total += get_runtime_chain_count_for_node(sym.sym->level, dat, subtree_counts);
+                size_t subtree_total = get_runtime_chain_count_for_node(sym.sym->level, dat, subtree_counts);
+                tasks.push_back(runtime_filter_task {
+                    sym.sym->level,
+                    &dat,
+                    dat.address,
+                    sym.sym->start,
+                    sym.sym->name,
+                    sym.sym->count,
+                    subtree_total,
+                });
+                total_count += subtree_total;
             }
         }
 
-        printf("[*] 待验证链数: %zu\n", progress.total);
-        print_runtime_filter_progress(0, 0, progress);
+        runtime_filter_shared_state shared;
+        shared.out_f = fout;
+        shared.progress.total = total_count;
 
-        for (auto &sym : syms) {
-            for (auto &dat : sym.data) {
-                std::vector<size_t> offset_stack;
-                offset_stack.reserve(sym.sym->level > 0 ? sym.sym->level : 1);
-                verify_chain_runtime_recursive(
-                    sym.sym->level, dat, contents, subtree_counts,
-                    dat.address,
-                    dat.address,
-                    sym.sym->start, sym.sym->name, sym.sym->count,
-                    target_addr, offset_stack,
-                    fout, valid_count, total_count, progress,
-                    get_runtime_chain_count_for_node(sym.sym->level, dat, subtree_counts));
+        size_t filter_threads = p.threads > 0 ? (size_t)p.threads : 1;
+        if (tasks.empty())
+            filter_threads = 1;
+        else if (filter_threads > tasks.size())
+            filter_threads = tasks.size();
+
+        printf("[*] 待验证链数: %zu\n", total_count);
+        printf("[*] 过滤线程: %zu\n", filter_threads);
+        print_runtime_filter_progress(0, 0, shared.progress);
+
+        std::atomic_size_t next_task {0};
+        auto worker_fn = [&]() {
+            runtime_filter_worker_state worker;
+            while (true) {
+                size_t index = next_task.fetch_add(1, std::memory_order_relaxed);
+                if (index >= tasks.size())
+                    break;
+
+                process_runtime_filter_task(tasks[index], contents, subtree_counts,
+                                            target_addr, shared, worker);
             }
+            flush_runtime_filter_worker_state(shared, worker, true);
+        };
+
+        std::vector<std::thread> workers;
+        workers.reserve(filter_threads > 0 ? filter_threads - 1 : 0);
+        for (size_t i = 1; i < filter_threads; ++i) {
+            workers.emplace_back(worker_fn);
         }
+        worker_fn();
+        for (auto &worker : workers) {
+            worker.join();
+        }
+
+        total_count = shared.total_count.load(std::memory_order_relaxed);
+        valid_count = shared.valid_count.load(std::memory_order_relaxed);
     } else {
         // 静态验证: 比对 bin 中记录的最终地址
         for (auto &sym : syms) {
