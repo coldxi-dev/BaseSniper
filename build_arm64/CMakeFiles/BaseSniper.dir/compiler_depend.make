@@ -17,6 +17,7 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/Project/cfindBase/memtool/memextend.h \
   /home/coldxi/Project/cfindBase/memtool/memextend.hpp \
   /home/coldxi/Project/cfindBase/memtool/memsetting.h \
+  /home/coldxi/Project/cfindBase/memtool/readtool.h \
   /home/coldxi/Project/cfindBase/utils/mapqueue.h \
   /home/coldxi/Project/cfindBase/utils/mapqueue.hpp \
   /home/coldxi/Project/cfindBase/utils/sutils.h \
@@ -46,14 +47,22 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/stdint.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/share/asan_ignorelist.txt \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/bitsperlong.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/byteorder.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/errno.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/fcntl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/ioctls.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/mman.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/posix_types.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sigcontext.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/siginfo.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/signal.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sockios.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sve_context.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/swab.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/termbits.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/termios.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/types.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/unistd.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/alloca.h \
@@ -62,18 +71,27 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/legacy_unistd_inlines.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/ndk-version.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/versioning.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/arpa/inet.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/bitsperlong.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/errno-base.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/errno.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/fcntl.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/hugetlb_encode.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/int-ll64.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/ioctls.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/mman-common.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/mman.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/posix_types.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/siginfo.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/signal-defs.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/signal.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/sockios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/swab.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termbits-common.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termbits.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termios.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/types.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/unistd.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/bionic_multibyte_result.h \
@@ -81,6 +99,7 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/flock.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/flock64.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/fcntl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/socket.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/stat.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/stdio.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/stdlib.h \
@@ -91,14 +110,19 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/getentropy.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/getopt.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/glibc-syscalls.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/in_addr.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ip_mreq_source.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ip_msfilter.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/lockf.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/mbstate_t.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/page_size.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/posix_limits.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/pthread_types.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sa_family_t.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/seek_constants.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/signal_types.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sockaddr_storage.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/strcasecmp.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/swab.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sysconf.h \
@@ -439,6 +463,22 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__exception/nested_exception.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__exception/operations.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__exception/terminate.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/copy_options.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_entry.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_iterator.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_options.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_status.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_time_type.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_type.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/filesystem_error.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/operations.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/path.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/path_iterator.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/perm_options.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/perms.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/space_info.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/u8path.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/buffer.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/concepts.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/enable_insertable.h \
@@ -855,14 +895,18 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/errno.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/exception \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/execution \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/filesystem \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/float.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/forward_list \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/fstream \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/functional \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/future \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/initializer_list \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/inttypes.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iomanip \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/ios \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iosfwd \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iostream \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/istream \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iterator \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/limits \
@@ -904,35 +948,53 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/ctype.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/dirent.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/dlfcn.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/endian.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/errno.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/fcntl.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/features.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/getopt.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/inttypes.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/limits.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/byteorder/little_endian.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/compiler.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/compiler_types.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/errno.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/fadvise.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/falloc.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/fcntl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/in.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/in6.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/input-event-codes.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/input.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/ipv6.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/libc-compat.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/limits.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/memfd.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/mman.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/openat2.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/posix_types.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/prctl.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/sched.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/signal.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/sockios.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/stat.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/stddef.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/swab.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/termios.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/time.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/time_types.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/tty.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/types.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/uio.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/wait.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/locale.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/malloc.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/math.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netdb.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netinet/in.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netinet/in6.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/pthread.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sched.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/signal.h \
@@ -942,8 +1004,12 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/string.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/strings.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/cdefs.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/endian.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/ioctl.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/mman.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/prctl.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/select.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/socket.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/stat.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/syscall.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/time.h \
@@ -972,7 +1038,15 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/stat.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/socket.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/select.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/prctl.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/ioctl.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/endian.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/cdefs.h:
 
@@ -980,7 +1054,9 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/stdint.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sched.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netinet/in.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netdb.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/math.h:
 
@@ -990,11 +1066,19 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/time.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/swab.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/stat.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/sockios.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/socket.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/signal.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/sched.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/prctl.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/posix_types.h:
 
@@ -1003,6 +1087,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/mman.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/memfd.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/input.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/fcntl.h:
 
@@ -1025,8 +1111,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/type_traits:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/thread:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/system_error:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/stdlib.h:
 
@@ -1056,11 +1140,21 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iterator:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iostream:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iosfwd:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iomanip:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/initializer_list:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/functional:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/system_error:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/fstream:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/filesystem:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/execution:
 
@@ -1092,17 +1186,11 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/no_destroy.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/move.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/in_place.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/forward_like.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/exchange.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/time.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/cmp.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__variant/monostate.h:
 
@@ -1115,6 +1203,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/type_list.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/strip_signature.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/ipv6.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/result_of.h:
 
@@ -1171,6 +1261,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_standard_layout.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_specialization.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/input-event-codes.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_signed_integer.h:
 
@@ -1320,8 +1412,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__stop_token/stop_source.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/view_interface.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/subrange.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/movable_box.h:
@@ -1370,8 +1460,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/temp_value.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/pointer_traits.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/construct_at.h:
@@ -1379,6 +1467,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory_resource/memory_resource.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/concepts.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/in.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/compressed_pair.h:
 
@@ -1454,61 +1544,105 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/projected.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_merge.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/ostreambuf_iterator.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/swab.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/move_sentinel.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_copy_assignable.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/mergeable.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/popcount.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iterator_traits.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_max_element.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__undef_macros:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/errno.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/istreambuf_iterator.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_lower_bound.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/front_insert_iterator.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_args.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/erase_if_container.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_heap.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/limits.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_generate_n.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/distance.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/default_sentinel.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/data.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/cpp17_iterator_concepts.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/condition_variable:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/counted_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_same.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/concepts.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/optional:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/bounded_iter.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_pod.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/data.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/back_insert_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/advance.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/float.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/access.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ios/fpos.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/in6.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__hash_table:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/tuple.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/string_view.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/string.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/sstream.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/forward_list:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/pair.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/ostream.h:
 
 /home/coldxi/Project/cfindBase/memtool/memextend.hpp:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_assignable.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/boyer_moore_searcher.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__exception/exception.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_lexicographical_compare.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/mutex:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/equal.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/string.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iterator.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_n.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_find.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/features.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_if.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/default_sentinel.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_all_of.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sched.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termios.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/push_heap.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/byteorder.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_move.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_is_partitioned.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/is_pointer_in_range.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_includes.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_valid_expansion.h:
 
@@ -1518,13 +1652,9 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/find_if.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/pthread.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/incrementable_traits.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_abstract.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_iterator_concept.h:
-
-/home/coldxi/Project/cfindBase/utils/threadtool/threadpool.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/blsr.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cstring:
 
@@ -1536,6 +1666,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/stable_sort.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/perms.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/merge.h:
 
 /home/coldxi/Project/cfindBase/memtool/membase.hpp:
@@ -1544,11 +1676,7 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/find_if.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backend.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/cpp17_iterator_concepts.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_partitioned.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/ioctl.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/unordered_map:
 
@@ -1564,37 +1692,21 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/prev_permutation.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__mutex/once_flag.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/permutable.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pop_heap.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/allocation_guard.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partition.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/move.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ios/fpos.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/float.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/access.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_unsigned_integer.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/mismatch.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_function.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__thread/poll_with_backoff.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_move_backward.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/bionic_multibyte_result.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_unique.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/count.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_reverse.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_lock_free.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_copy.h:
 
@@ -1606,11 +1718,9 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/merge.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/deque:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_n.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_find.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/max_element.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sa_family_t.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/lexicographical_compare_three_way.h:
 
@@ -1622,15 +1732,9 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/year.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/copyable.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_empty.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/lexicographical_compare.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/algorithm:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/stable_sort.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partition_copy.h:
 
@@ -1638,19 +1742,15 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/is_permutation.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/endian.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/is_heap_until.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/min_element.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/byteorder/little_endian.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/formatter_integral.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/lazy.h:
-
-/home/coldxi/Project/cfindBase/chainer/cformat.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/stddef.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/bind_back.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/rel_ops.h:
 
@@ -1672,23 +1772,29 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_count_if.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/uses_allocator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/fill_n.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/legacy_stdlib_inlines.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_copy_assignable.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/errno-base.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/uses_allocator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/fill_n.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/for_each_segment.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/for_each.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/move.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/socket.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_frontend_dispatch.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/fold.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/libc-compat.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_replace_copy.h:
 
@@ -1704,13 +1810,251 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_stable_partition.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/in_in_out_result.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cmath:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/is_partitioned.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/raw_storage_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/inttypes.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__locale:
+
+/home/coldxi/Project/cfindBase/chainer/ccscan.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/compiler_types.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/memory:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/binary_function.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/size.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/unistd.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_ends_with.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__numeric/pstl_transform_reduce.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/wrap_iter.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/in_in_result.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__exception/terminate.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partial_sort.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/fadvise.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_min.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/fill.h:
+
+/home/coldxi/Project/cfindBase/memtool/membase.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_n.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/transform.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/relation.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/buffer.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/inttypes.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/error_functions.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_backward.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/auto_ptr.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_backward.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/subrange.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/comp.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/bit_log2.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/binary_search.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/sample.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/any_of.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/version:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_if.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/all_of.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/year_month.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/modulo.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_functions.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/wchar_limits.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/posix_types.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/posix_types.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/max.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_wchar_t.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/posix_limits.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/priority_tag.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/partial_order.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/ioctl.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/totally_ordered.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/identity.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_extent.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_sort.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/lazy.h:
+
+/home/coldxi/Project/cfindBase/chainer/cformat.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/stddef.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/bind_back.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/versioning.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/fma.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/stable_partition.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/empty.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_type.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit_reference:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_for_each.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_null.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/from_range.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/weak_order.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cstdint:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_generate.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/is_sorted_until.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_move_constructible.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partial_sort_copy.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_parse_context.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/termios.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__stop_token/stop_state.h:
+
+/home/coldxi/Project/cfindBase/utils/varray.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_max_align_t.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/view_interface.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/swab.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/concepts.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/signal_types.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg_va_list.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_unique.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/count.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/bionic_multibyte_result.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_function.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__thread/poll_with_backoff.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_move_backward.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_reverse.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_lock_free.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/ranges_construct_at.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/istream_iterator.h:
+
+/home/coldxi/Project/cfindBase/utils/mapqueue.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/move_backward.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/clocale:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/swap.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/any_of.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/equal_range.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/comp_ref_type.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/type_identity.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg_va_copy.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/dlfcn.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/pointer_to_binary_function.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/iter_swap.h:
+
+/home/coldxi/Project/cfindBase/memtool/readtool.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_flag.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_unbounded_array.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/compare_strong_order_fallback.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partition_point.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/nth_element.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/stdarg.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/strcasecmp.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_min_element.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_implicitly_default_constructible.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_nullptr_t.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cstddef:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__random/uniform_int_distribution.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_binary_search.h:
+
 /home/coldxi/Project/cfindBase/chainer/cbase.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_minmax.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/includes.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/float.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/unistd.h:
 
@@ -1730,72 +2074,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/enable_insertable.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/posix_types.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/max.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_wchar_t.h:
-
-/home/coldxi/Project/cfindBase/utils/threadtool/threadpool.hpp:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/inttypes.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/error_functions.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_backward.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/identity.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_extent.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_sort.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/auto_ptr.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_backward.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/versioning.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/posix_types.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/wchar_limits.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/fma.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/stable_partition.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/raw_storage_iterator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/inttypes.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__locale:
-
-/home/coldxi/Project/cfindBase/chainer/ccscan.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/in_in_out_result.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cmath:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/is_partitioned.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit_reference:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/from_range.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/weak_order.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/concepts.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/signal_types.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg_va_list.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partition_point.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/nth_element.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/stdarg.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/min_max_result.h:
 
 /home/coldxi/Project/cfindBase/utils/mapqueue.hpp:
@@ -1804,19 +2082,9 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sysconf.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cstddef:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/errno.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__random/uniform_int_distribution.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_binary_search.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/strings.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/backend.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/copy_cv.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/unary_negate.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_max_element.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/traits.h:
 
@@ -1826,31 +2094,11 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/getopt.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_minmax_element.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/builtin_new_allocator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/has_single_bit.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_fwd.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/locale.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_enum.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_generate.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__support/android/locale_bionic.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/legacy_unistd_inlines.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_find_first_of.h:
-
-/home/coldxi/Project/cfindBase/utils/timer.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/enable_if.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/same_as.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/abs.h:
 
@@ -1894,8 +2142,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/types.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_for_each.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/pthread_types.h:
 
 /home/coldxi/Project/cfindBase/chainer/cformat.hpp:
@@ -1904,59 +2150,39 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/Project/cfindBase/chainer/csearch.hpp:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/compiler_types.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/memory:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/binary_function.h:
-
-/home/coldxi/Project/cfindBase/memtool/membase.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_null.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_for_each.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/iter_swap.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/posix_limits.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/priority_tag.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/partial_order.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/ucontext.h:
 
 /home/coldxi/Project/cfindBase/chainer/cscan.hpp:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_transform.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/uio.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_heap_until.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/make_32_64_or_128_bit.h:
 
-/home/coldxi/Project/cfindBase/main.cpp:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/count_if.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/errno.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/limits.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/clamp.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/three_way_comparable.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg___gnuc_va_list.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/concepts:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/destructible.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/share/asan_ignorelist.txt:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netinet/in6.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/hugetlb_encode.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_sorted_until.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__mutex/unique_lock.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/ordering.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_set_intersection.h:
 
 /home/coldxi/Project/cfindBase/chainer/cbase.hpp:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/inttypes.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/convert_to_integral.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/wait.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/alloca.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_sort_heap.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_floating_point.h:
 
@@ -1972,15 +2198,17 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/signal-defs.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_nth_element.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_find_first_of.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/find_if_not.h:
+/home/coldxi/Project/cfindBase/utils/timer.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/endian.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/common_iterator.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/fcntl.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg_va_arg.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_ptrdiff_t.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/enable_if.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/same_as.h:
 
 /home/coldxi/Project/cfindBase/chainer/ccformat.h:
 
@@ -1988,11 +2216,7 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/fill.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/fdim.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_sorted.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/signal.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/arpa/inet.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/can_extract_key.h:
 
@@ -2000,77 +2224,55 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_count.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/reverse_iterator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/is_eq.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/invocable.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/fstream.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/size.h:
+/home/coldxi/Project/cfindBase/utils/threadtool/threadpool.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/unistd.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/pthread.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/cstdint:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_abstract.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_generate.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_iterator_concept.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/is_sorted_until.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/ioctls.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_move_constructible.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/swab.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partial_sort_copy.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/strings.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_parse_context.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/socket.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_max_align_t.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__stop_token/intrusive_shared_ptr.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__stop_token/stop_state.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_string.h:
 
-/home/coldxi/Project/cfindBase/utils/varray.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/alloca.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_indices.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_sort_heap.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sve_context.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/strings.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_context.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/backend.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/version:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/copy_cv.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/all_of.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_if.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/unary_negate.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/ndk-version.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/not_fn.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iterator_traits.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/bitsperlong.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/comp.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/bit_log2.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/limits.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/lower_bound.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/errno.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/limits.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/uio.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/make_32_64_or_128_bit.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/count_if.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/fcntl.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/any_of.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/ioctls.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_move_constructible.h:
 
@@ -2082,10 +2284,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/mman.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/condition_variable:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/counted_iterator.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/bitsperlong.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/unique_copy.h:
@@ -2093,6 +2291,30 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/check_memory_order.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/siginfo.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_indices.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_context.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sve_context.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/deque:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_find.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/max_element.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/fcntl.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_ptrdiff_t.h:
+
+/home/coldxi/Project/cfindBase/utils/threadtool/threadpool.hpp:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/copyable.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termbits.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/equality_comparable.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/bitset:
 
@@ -2106,23 +2328,37 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/int-ll64.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_move_assignable.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/adjacent_find.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/flock64.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/mman-common.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_mismatch.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/wctype.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/find_end.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_nth_element.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/common_comparison_category.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/find_if_not.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/string_view:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/endian.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_reference.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/in_addr.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_max.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/algorithm:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/lockf.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/stable_sort.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__support/android/locale_bionic.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/legacy_unistd_inlines.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/socket.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/arithmetic.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/dirent.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/indirectly_comparable.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_equal_range.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/stdio.h:
 
@@ -2136,17 +2372,33 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/high_resolution_clock.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/inttypes.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/convert_to_integral.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/wait.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ip_mreq_source.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/thread.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/generate.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/strings.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/get_device_api_level_inlines.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/mergeable.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/time.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/cmp.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/termbits.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__availability:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/disjunction.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/function.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__node_handle:
 
@@ -2158,45 +2410,27 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/glibc-syscalls.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ip_msfilter.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sockios.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_offsetof.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/mbstate_t.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_clamp.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/sockios.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/advance.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/file_clock.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_clamp.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__string/char_traits.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/seek_constants.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_implicitly_default_constructible.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stddef_nullptr_t.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/strcasecmp.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_min_element.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/mman-common.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/wctype.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/adjacent_find.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/year_month.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/modulo.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_functions.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/binary_search.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/sample.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/constructible.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_find_if_not.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sockaddr_storage.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_move_common.h:
 
@@ -2206,81 +2440,109 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/bind_front.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__undef_macros:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/swab.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/istreambuf_iterator.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_merge.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy_n.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_copy_assignable.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/transform.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/popcount.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/relation.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_status.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/buffer.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_generate_n.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/arithmetic.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/is_pointer_in_range.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/ranges_construct_at.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_includes.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/istream_iterator.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_heap.h:
 
-/home/coldxi/Project/cfindBase/utils/mapqueue.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_transform.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg___gnuc_va_list.h:
+/home/coldxi/Project/cfindBase/main.cpp:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/concepts:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_heap_until.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/destructible.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_partitioned.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/clamp.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_permutation.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/three_way_comparable.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__math/fdim.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/move_backward.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/signal.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/comp_ref_type.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_sorted.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_sorted_until.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__mutex/unique_lock.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/operations.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/ordering.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_find_if_not.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/constructible.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/copy_options.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_lexicographical_compare.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_lower_bound.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_args.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/enable_borrowed_range.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_make_heap.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/rotate.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/type_identity.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_make_heap.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg_va_copy.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_assignable.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/dlfcn.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/boyer_moore_searcher.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/pointer_to_binary_function.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/string_view:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/clocale:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_reference.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/swap.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/lockf.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backends/any_of.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_max.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/equal_range.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_callable.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/fadvise.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_rotate_copy.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_min.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__charconv/to_chars_result.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/partial_sort.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/compare_three_way_result.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/fill.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/includes.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_ends_with.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/float.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__numeric/pstl_transform_reduce.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_minmax.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/wrap_iter.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_minmax_element.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/in_in_result.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__memory/builtin_new_allocator.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__exception/terminate.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/has_single_bit.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_is_permutation.h:
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_fwd.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_mismatch.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/find_end.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/common_comparison_category.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/countl.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_move.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/empty.h:
 
@@ -2290,11 +2552,15 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_replace_if.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/tty.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_assignable.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_partial_sort_copy.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/steady_clock.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_options.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_partition.h:
 
@@ -2322,8 +2588,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_remove_copy_if.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/ostreambuf_iterator.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/signal.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_remove_if.h:
@@ -2337,6 +2601,10 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_rotate.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_rotate_copy.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/insert_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/unicode.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_sample.h:
 
@@ -2358,13 +2626,19 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_set_symmetric_difference.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_backends/cpu_backend.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/u8path.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/climits:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iter_swap.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_inplace_merge.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_set_union.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_shuffle.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/dirent.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_equal_range.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/indirectly_comparable.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_stable_sort.h:
 
@@ -2406,11 +2680,15 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/pointer_to_unary_function.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/path.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/byteswap.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/bind.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/reverse_copy.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/ioctl.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/prev.h:
 
@@ -2419,8 +2697,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/rotate.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/bit_floor.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/data.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/rotate_copy.h:
 
@@ -2457,6 +2733,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/find.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/ios.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/space_info.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/sort.h:
 
@@ -2498,6 +2776,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/binder2nd.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termbits-common.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__assert:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic.h:
@@ -2510,16 +2790,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/movable.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_flag.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_unbounded_array.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/compare_strong_order_fallback.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/unicode.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/insert_iterator.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_init.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/escaped_output_table.h:
@@ -2528,29 +2798,19 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_sync.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_member_object_pointer.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_arg_store.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/fence.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/is_always_lock_free.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__availability:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_move.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/countl.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/disjunction.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/function.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/bit_ceil.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__utility/forward.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/bit_width.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_pod.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__ranges/data.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/back_insert_iterator.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/invert_if.h:
 
@@ -2559,14 +2819,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__system_error/error_code.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__charconv/chars_format.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_callable.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/compare_three_way_result.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pstl_rotate_copy.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__charconv/to_chars_result.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/wchar.h:
 
@@ -2579,8 +2831,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_core_convertible.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/day.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/file_clock.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__chrono/hh_mm_ss.h:
 
@@ -2626,6 +2876,8 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_like.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/termios.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/class_or_enum.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/convertible_to.h:
@@ -2642,14 +2894,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/regular.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/equality_comparable.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_member_object_pointer.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/fence.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_arg_store.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/remove_copy_if.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/predicate.h:
@@ -2663,12 +2907,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__charconv/traits.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/swappable.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__concepts/totally_ordered.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include/__stdarg_va_arg.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/common_iterator.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_referenceable.h:
 
@@ -2696,13 +2934,41 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/extended_grapheme_cluster_table.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/move_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/replace_if.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_entry.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_time_type.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_move_assignable.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/flock64.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/filesystem_error.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/reverse_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__compare/is_eq.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/path_iterator.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iter_move.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/kill_dependency.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/perm_options.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_for_each.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_partition_copy.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_error.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__stop_token/intrusive_shared_ptr.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/format_string.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/formatter.h:
 
@@ -2736,12 +3002,6 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/parser_std_format_spec.h:
 
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__mutex/once_flag.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/pop_heap.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/permutable.h:
-
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__std_mbstate_t.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__format/width_estimation_table.h:
@@ -2758,13 +3018,13 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/binary_negate.h:
 
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/streambuf.h:
+
+/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/hash.h:
+
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/is_transparent.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/mem_fn.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/copy.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/subrange.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/next_permutation.h:
 
@@ -2805,65 +3065,3 @@ CMakeFiles/BaseSniper.dir/main.cpp.o: /home/coldxi/Project/cfindBase/main.cpp \
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__charconv/to_chars_integral.h:
 
 /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/memory_resource.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/ostream.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/forward_list:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/pair.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/sstream.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__functional/hash.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/streambuf.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/string_view.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__fwd/tuple.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__hash_table:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/optional:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/bounded_iter.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_same.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/concepts.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/limits.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/distance.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/empty.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/erase_if_container.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/front_insert_iterator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__bit/blsr.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/incrementable_traits.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__atomic/kill_dependency.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iter_move.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/climits:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_inplace_merge.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_set_union.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iter_swap.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_find.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/iterator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__algorithm/replace_if.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/move_iterator.h:
-
-/home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__iterator/move_sentinel.h:

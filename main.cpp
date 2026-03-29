@@ -21,24 +21,58 @@ static const char *DEFAULT_CONFIG_PATH = "/sdcard/BaseSniper/BaseSniper.conf";
 static const char *DEFAULT_OUTPUT_PATH = "/sdcard/BaseSniper/BaseSniper_result.bin";
 static const char *DEFAULT_FORMAT_PATH = "/sdcard/BaseSniper/BaseSniper_result.txt";
 static const char *DEFAULT_FILTER_PATH = "/sdcard/BaseSniper/BaseSniper_result_filtered.txt";
+static const char *DEFAULT_FILTER_BIN_PATH = "/sdcard/BaseSniper/BaseSniper_result_filtered.bin";
 
 struct scan_params {
     std::string package;
     int         pid         = -1;
     uint64_t    address     = 0;
     bool        has_address = false;
+    uint64_t    link_start  = 0;
+    uint64_t    link_end    = 0;
+    bool        has_link_range = false;
     int         depth       = 8;
     int         min_level   = 0;
     size_t      offset      = 2048;
     int         threads     = 10;
     int         block_size  = 1 << 20; // 1MB
     int         mem_types   = memtool::Anonymous | memtool::C_bss | memtool::C_data;
+    bool        use_kernel_rw = false;
+    int         kernel_rw_mode = 1;
     std::string base_module;
     std::string output      = DEFAULT_OUTPUT_PATH;
     std::string format_path;
 };
 
 // ==================== Helpers ====================
+
+static std::string trim_string(const std::string &input);
+
+static const char *kernel_rw_mode_to_string(bool enabled, int mode)
+{
+    if (!enabled)
+        return "off";
+    return mode == 2 ? "hook" : "dev";
+}
+
+static bool parse_kernel_rw_mode(const std::string &input, int &mode)
+{
+    std::string text = trim_string(input);
+    if (text.empty())
+        return false;
+
+    if (text == "1" || text == "dev" || text == "rtdev") {
+        mode = 1;
+        return true;
+    }
+
+    if (text == "2" || text == "hook" || text == "rthook") {
+        mode = 2;
+        return true;
+    }
+
+    return false;
+}
 
 static void print_usage(const char *prog)
 {
@@ -54,6 +88,7 @@ static void print_usage(const char *prog)
         "\n"
         "  Scan:\n"
         "    -a, --address <addr>    Target address to scan (hex, e.g. 0x784701F1C0)\n"
+        "    -R, --link-range <a-b|addr> Search chains between two addresses: use this as root range\n"
         "    -d, --depth <n>         Pointer chain depth (default: 8)\n"
         "    -L, --min-level <n>     Do not save chains below this level (default: 0)\n"
         "    -r, --range <n>         Max offset range per level (default: 2048)\n"
@@ -77,6 +112,10 @@ static void print_usage(const char *prog)
         "                              all = All\n"
         "                            (default: A,Cb,Cd)\n"
         "\n"
+        "  Read/Write backend:\n"
+        "    -k, --kernel-rw <mode> Enable kernel R/W: dev or hook\n"
+        "    -K, --no-kernel-rw     Disable kernel R/W and use process_vm\n"
+        "\n"
         "  Output:\n"
         "    -o, --output <path>     Output file name/path (saved under /sdcard/BaseSniper)\n"
         "    -f, --format <path>     Format file name/path (saved under /sdcard/BaseSniper)\n"
@@ -85,10 +124,47 @@ static void print_usage(const char *prog)
         "\n"
         "  Examples:\n"
         "    %s -p com.example.app -a 0x784701F1C0 -d 8 -r 2048\n"
-        "    %s -P 12345 -a 0x784701F1C0 -d 10 -r 4096 -m A,Ca,Cb,Cd -M libUE4.so -o result.bin\n"
+        "    %s -P 12345 -a 0x784701F1C0 -R 0x7000000000-0x7000001000 -d 10 -r 4096\n"
         "    %s -P 12345 -a 0x784701F1C0 -m all\n"
+        "    %s -P 12345 -a 0x784701F1C0 -k dev\n"
         "\n",
-        prog, prog, prog, prog);
+        prog, prog, prog, prog, prog);
+}
+
+static bool parse_address_range_text(const std::string &input, uint64_t &start, uint64_t &end)
+{
+    std::string text = trim_string(input);
+    if (text.empty())
+        return false;
+
+    size_t pos = text.find('-');
+    if (pos == std::string::npos)
+        pos = text.find(',');
+    if (pos == std::string::npos)
+        pos = text.find(':');
+    if (pos == std::string::npos)
+        pos = text.find(' ');
+    if (pos == std::string::npos)
+    {
+        char *single_end = nullptr;
+        start = strtoull(text.c_str(), &single_end, 16);
+        if (single_end == nullptr || *single_end != '\0')
+            return false;
+
+        end = start + 1;
+        return true;
+    }
+
+    std::string left = trim_string(text.substr(0, pos));
+    std::string right = trim_string(text.substr(pos + 1));
+    if (left.empty() || right.empty())
+        return false;
+
+    char *left_end = nullptr;
+    char *right_end = nullptr;
+    start = strtoull(left.c_str(), &left_end, 16);
+    end = strtoull(right.c_str(), &right_end, 16);
+    return left_end != nullptr && *left_end == '\0' && right_end != nullptr && *right_end == '\0';
 }
 
 static int parse_mem_types(const char *input)
@@ -243,6 +319,10 @@ static void normalize_scan_params(scan_params &p)
     normalize_params_paths(p);
     if (p.min_level < 0)
         p.min_level = 0;
+    if (p.has_link_range && p.link_start > p.link_end)
+        std::swap(p.link_start, p.link_end);
+    if (p.kernel_rw_mode < 1 || p.kernel_rw_mode > 2)
+        p.kernel_rw_mode = 1;
     p.base_module = normalize_module_filter_list(p.base_module);
 }
 
@@ -305,6 +385,17 @@ static int apply_base_module_filter(const std::string &module_names)
     }
 
     return matched;
+}
+
+static void apply_link_range_filter(const scan_params &p)
+{
+    for (auto *module : memtool::extend::vm_static_list)
+        module->filter = true;
+
+    auto *custom = new memtool::vm_static_data((size_t)p.link_start, (size_t)p.link_end);
+    strcpy(custom->name, "dizhi1");
+    custom->filter = false;
+    memtool::extend::vm_static_list.emplace_back(custom);
 }
 
 static const char *mem_types_to_string(int types)
@@ -418,6 +509,9 @@ static bool save_config(const scan_params &p, const char *path)
         fprintf(f, "pid=%d\n", p.pid);
     if (p.has_address)
         fprintf(f, "address=%" PRIx64 "\n", p.address);
+    if (p.has_link_range)
+        fprintf(f, "link_range=%" PRIx64 "-%" PRIx64 "\n", p.link_start, p.link_end);
+    fprintf(f, "kernel_rw=%s\n", kernel_rw_mode_to_string(p.use_kernel_rw, p.kernel_rw_mode));
     fprintf(f, "depth=%d\n", p.depth);
     fprintf(f, "min_level=%d\n", p.min_level);
     fprintf(f, "offset=%zu\n", p.offset);
@@ -463,6 +557,14 @@ static bool load_config(scan_params &p, const char *path)
         if (strcmp(key, "package") == 0)         { p.package = val; p.pid = -1; }
         else if (strcmp(key, "pid") == 0)         { p.pid = atoi(val); p.package.clear(); }
         else if (strcmp(key, "address") == 0)     { p.address = strtoull(val, nullptr, 16); p.has_address = true; }
+        else if (strcmp(key, "link_range") == 0)  p.has_link_range = parse_address_range_text(val, p.link_start, p.link_end);
+        else if (strcmp(key, "kernel_rw") == 0)   {
+            std::string rw = trim_string(val);
+            if (rw == "off" || rw == "0" || rw == "false")
+                p.use_kernel_rw = false;
+            else if (parse_kernel_rw_mode(rw, p.kernel_rw_mode))
+                p.use_kernel_rw = true;
+        }
         else if (strcmp(key, "depth") == 0)        p.depth = atoi(val);
         else if (strcmp(key, "min_level") == 0)    p.min_level = atoi(val);
         else if (strcmp(key, "offset") == 0)       p.offset = strtoull(val, nullptr, 10);
@@ -499,9 +601,14 @@ static int do_scan(scan_params &p)
         }
     }
 
+    memtool::base::configure_rw_backend(p.use_kernel_rw, p.kernel_rw_mode);
+
     printf("[*] BaseSniper - Pointer Chain Scanner\n");
     printf("[*] PID:        %d\n", memtool::base::target_pid);
     printf("[*] Address:    0x%" PRIx64 "\n", p.address);
+    if (p.has_link_range)
+        printf("[*] Link range: 0x%" PRIx64 "-0x%" PRIx64 "\n", p.link_start, p.link_end);
+    printf("[*] R/W:        %s\n", kernel_rw_mode_to_string(p.use_kernel_rw, p.kernel_rw_mode));
     printf("[*] Depth:      %d\n", p.depth);
     printf("[*] Min level:  %d\n", p.min_level);
     printf("[*] Range:      %zu\n", p.offset);
@@ -515,10 +622,16 @@ static int do_scan(scan_params &p)
     chainer::cscan<uint64_t> scanner;
 
     memtool::extend::get_target_mem();
-    int matched_modules = apply_base_module_filter(p.base_module);
+    int matched_modules = 0;
+    if (p.has_link_range)
+        apply_link_range_filter(p);
+    else
+        matched_modules = apply_base_module_filter(p.base_module);
     memtool::extend::set_mem_ranges(p.mem_types);
 
-    if (!p.base_module.empty()) {
+    if (p.has_link_range) {
+        printf("[*] Root range filter enabled: 0x%" PRIx64 "-0x%" PRIx64 "\n", p.link_start, p.link_end);
+    } else if (!p.base_module.empty()) {
         if (matched_modules == 0) {
             fprintf(stderr, "[!] No base module matched: %s\n", p.base_module.c_str());
             return 1;
@@ -628,6 +741,319 @@ static int do_format(scan_params &p)
 
 // ==================== 二次过滤 ====================
 
+enum filter_output_mode {
+    FILTER_OUTPUT_BIN,
+    FILTER_OUTPUT_TXT,
+};
+
+struct filtered_runtime_node {
+    uint64_t address = 0;
+    uint64_t value = 0;
+    std::vector<filtered_runtime_node> children;
+};
+
+struct filtered_bin_root {
+    chainer::cprog_data<uint64_t> data {};
+};
+
+struct filtered_runtime_sym {
+    uint64_t start = 0;
+    int range = 0;
+    int count = 0;
+    int level = 0;
+    std::string name;
+    std::vector<filtered_bin_root> roots;
+};
+
+struct txt_chain_entry {
+    std::string sym_name;
+    int sym_count = 0;
+    uint64_t root_offset = 0;
+    std::vector<size_t> offsets;
+};
+
+static bool has_file_ext(const std::string &path, const char *ext)
+{
+    size_t path_len = path.size();
+    size_t ext_len = strlen(ext);
+    if (path_len < ext_len)
+        return false;
+
+    return path.compare(path_len - ext_len, ext_len, ext) == 0;
+}
+
+static bool parse_hex_uint64(const std::string &text, uint64_t &value)
+{
+    if (text.empty())
+        return false;
+
+    char *end = nullptr;
+    value = strtoull(text.c_str(), &end, 16);
+    return end != nullptr && *end == '\0';
+}
+
+static bool parse_txt_chain_line(const std::string &line, txt_chain_entry &entry)
+{
+    std::string text = trim_string(line);
+    if (text.empty())
+        return false;
+
+    size_t left = text.find('[');
+    size_t right = left == std::string::npos ? std::string::npos : text.find(']', left + 1);
+    size_t plus = right == std::string::npos ? std::string::npos : text.find(" + 0x", right + 1);
+    if (left == std::string::npos || right == std::string::npos || plus == std::string::npos)
+        return false;
+
+    entry = {};
+    entry.sym_name = text.substr(0, left);
+    entry.sym_count = atoi(text.substr(left + 1, right - left - 1).c_str());
+
+    size_t root_start = plus + 5;
+    size_t arrow = text.find(" -> + 0x", root_start);
+    std::string root_text = text.substr(root_start, arrow == std::string::npos ? std::string::npos : arrow - root_start);
+    if (!parse_hex_uint64(root_text, entry.root_offset))
+        return false;
+
+    size_t pos = arrow;
+    while (pos != std::string::npos) {
+        size_t off_start = pos + 8;
+        size_t next = text.find(" -> + 0x", off_start);
+        std::string off_text = text.substr(off_start, next == std::string::npos ? std::string::npos : next - off_start);
+
+        uint64_t off = 0;
+        if (!parse_hex_uint64(off_text, off))
+            return false;
+
+        entry.offsets.emplace_back((size_t)off);
+        pos = next;
+    }
+
+    return true;
+}
+
+static std::vector<txt_chain_entry> load_txt_chain_entries(const std::string &path)
+{
+    std::vector<txt_chain_entry> entries;
+    FILE *f = fopen(path.c_str(), "r");
+    if (f == nullptr)
+        return entries;
+
+    char *line = nullptr;
+    size_t len = 0;
+    while (getline(&line, &len, f) > 0) {
+        txt_chain_entry entry;
+        if (parse_txt_chain_line(line, entry))
+            entries.emplace_back(std::move(entry));
+    }
+
+    free(line);
+    fclose(f);
+    return entries;
+}
+
+static memtool::vm_static_data *find_static_module_by_name_count(const txt_chain_entry &entry)
+{
+    for (auto *module : memtool::extend::vm_static_list) {
+        if (strcmp(module->name, entry.sym_name.c_str()) == 0 && module->count == entry.sym_count)
+            return module;
+    }
+    return nullptr;
+}
+
+static bool verify_txt_chain_runtime(const txt_chain_entry &entry, uint64_t target_addr, uint64_t &root_addr)
+{
+    auto *module = find_static_module_by_name_count(entry);
+    if (module == nullptr)
+        return false;
+
+    root_addr = module->start + entry.root_offset;
+    uint64_t current_addr = root_addr;
+    for (size_t off : entry.offsets) {
+        uint64_t value = 0;
+        long ret = memtool::base::readv(current_addr, &value, sizeof(value));
+        if (ret <= 0)
+            return false;
+
+        current_addr = value + off;
+    }
+
+    return current_addr == target_addr;
+}
+
+static void write_filter_txt_line(
+    const char *sym_name,
+    int sym_count,
+    uint64_t root_addr,
+    uint64_t sym_start,
+    const std::vector<size_t> &offset_stack,
+    FILE *out_f)
+{
+    char buf[500];
+    int pos = sprintf(buf, "%s[%d] + 0x%lX",
+                      sym_name, sym_count, (size_t)(root_addr - sym_start));
+    for (auto &off : offset_stack)
+        pos += sprintf(buf + pos, " -> + 0x%lX", off);
+    pos += sprintf(buf + pos, "\n");
+    fwrite(buf, pos, 1, out_f);
+}
+
+static uint32_t append_filtered_bin_node(
+    int level,
+    const chainer::cprog_data<uint64_t> &dat,
+    const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
+    uint64_t target_addr,
+    std::vector<std::vector<chainer::cprog_data<uint64_t>>> &filtered_contents,
+    bool &matched)
+{
+    chainer::cprog_data<uint64_t> out = dat;
+
+    if (level == 0) {
+        matched = dat.address == target_addr;
+        if (!matched)
+            return 0;
+
+        out.start = 0;
+        out.end = 0;
+        filtered_contents[0].push_back(out);
+        return (uint32_t)(filtered_contents[0].size() - 1);
+    }
+
+    std::vector<uint32_t> child_indexes;
+    child_indexes.reserve(dat.end - dat.start);
+    for (uint32_t i = dat.start; i < dat.end; ++i) {
+        bool child_matched = false;
+        uint32_t child_index = append_filtered_bin_node(level - 1, contents[level - 1][i], contents,
+                                                        target_addr, filtered_contents, child_matched);
+        if (child_matched)
+            child_indexes.push_back(child_index);
+    }
+
+    matched = !child_indexes.empty();
+    if (!matched)
+        return 0;
+
+    out.start = child_indexes.front();
+    out.end = child_indexes.back() + 1;
+    filtered_contents[level].push_back(out);
+    return (uint32_t)(filtered_contents[level].size() - 1);
+}
+
+static bool append_filtered_runtime_node(
+    int level,
+    const chainer::cprog_data<uint64_t> &dat,
+    const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
+    uint64_t current_addr,
+    uint64_t target_addr,
+    filtered_runtime_node &out)
+{
+    out.address = dat.address;
+    out.value = dat.value;
+
+    if (level == 0)
+        return current_addr == target_addr;
+
+    uint64_t value = 0;
+    long ret = memtool::base::readv(current_addr, &value, sizeof(value));
+    if (ret <= 0)
+        return false;
+
+    out.children.clear();
+    out.children.reserve(dat.end - dat.start);
+    for (uint32_t i = dat.start; i < dat.end; ++i) {
+        const auto &next = contents[level - 1][i];
+        size_t off = (size_t)(next.address - dat.value);
+        filtered_runtime_node child;
+        if (append_filtered_runtime_node(level - 1, next, contents, value + off, target_addr, child))
+            out.children.emplace_back(std::move(child));
+    }
+
+    return !out.children.empty();
+}
+
+static void flatten_filtered_runtime_node(
+    const filtered_runtime_node &node,
+    int level,
+    std::vector<std::vector<chainer::cprog_data<uint64_t>>> &filtered_contents,
+    uint32_t &out_index)
+{
+    chainer::cprog_data<uint64_t> out;
+    out.address = node.address;
+    out.value = node.value;
+
+    if (level == 0) {
+        out.start = 0;
+        out.end = 0;
+        filtered_contents[0].push_back(out);
+        out_index = (uint32_t)(filtered_contents[0].size() - 1);
+        return;
+    }
+
+    uint32_t start = 0;
+    uint32_t end = 0;
+    bool has_child = false;
+    for (const auto &child : node.children) {
+        uint32_t child_index = 0;
+        flatten_filtered_runtime_node(child, level - 1, filtered_contents, child_index);
+        if (!has_child) {
+            start = child_index;
+            has_child = true;
+        }
+        end = child_index + 1;
+    }
+
+    out.start = start;
+    out.end = end;
+    filtered_contents[level].push_back(out);
+    out_index = (uint32_t)(filtered_contents[level].size() - 1);
+}
+
+static size_t write_filtered_bin_file(
+    const std::vector<filtered_runtime_sym> &syms,
+    const std::vector<std::vector<chainer::cprog_data<uint64_t>>> &filtered_contents,
+    FILE *fout)
+{
+    chainer::cprog_header header;
+    header.size = sizeof(uint64_t);
+    header.version = 101;
+    header.module_count = (int)syms.size();
+    header.level = (int)filtered_contents.size() - 1;
+    header.sign[0] = 0;
+    strcpy(header.sign, "BaseSniper pointer chain data\n");
+    fwrite(&header, sizeof(header), 1, fout);
+
+    size_t total_count = 0;
+    for (const auto &sym_info : syms) {
+        chainer::cprog_sym<uint64_t> sym {};
+        sym.start = sym_info.start;
+        sym.range = sym_info.range;
+        sym.count = sym_info.count;
+        sym.level = sym_info.level;
+        sym.pointer_count = (int)sym_info.roots.size();
+        strncpy(sym.name, sym_info.name.c_str(), sizeof(sym.name) - 1);
+        sym.name[sizeof(sym.name) - 1] = 0;
+        fwrite(&sym, sizeof(sym), 1, fout);
+
+        for (const auto &root : sym_info.roots) {
+            fwrite(&root.data, sizeof(root.data), 1, fout);
+            ++total_count;
+        }
+    }
+
+    for (size_t level = 0; level + 1 < filtered_contents.size(); ++level) {
+        chainer::cprog_llen llen {};
+        llen.level = (int)level;
+        llen.count = (unsigned int)filtered_contents[level].size();
+        fwrite(&llen, sizeof(llen), 1, fout);
+
+        if (!filtered_contents[level].empty())
+            fwrite(filtered_contents[level].data(), sizeof(chainer::cprog_data<uint64_t>),
+                   filtered_contents[level].size(), fout);
+    }
+
+    fflush(fout);
+    return total_count;
+}
+
 // 递归遍历指针链树，对每条完整链从 static base 开始逐级 readv，
 // 验证最终地址是否等于 target_addr。有效链写入 out_f。
 static void verify_chain_recursive(
@@ -642,7 +1068,7 @@ static void verify_chain_recursive(
         ++total_count;
         if (dat.address == target_addr) {
             *pre = 0;
-            auto n = sprintf(pre, " = %lx\n", (size_t)dat.address);
+            auto n = sprintf(pre, "\n");
             fwrite(buf, pre + n - buf, 1, out_f);
             ++valid_count;
         }
@@ -804,16 +1230,9 @@ static void write_runtime_filter_match(
     const std::vector<size_t> &offset_stack,
     runtime_filter_shared_state &shared)
 {
-    char buf[500];
-    int pos = sprintf(buf, "%s[%d] + 0x%lX",
-                      task.sym_name, task.sym_count, (size_t)(task.root_addr - task.sym_start));
-    for (auto &off : offset_stack) {
-        pos += sprintf(buf + pos, " -> + 0x%lX", off);
-    }
-    pos += sprintf(buf + pos, " = %lx\n", (size_t)target_addr);
-
     std::lock_guard<std::mutex> lock(shared.output_mutex);
-    fwrite(buf, pos, 1, shared.out_f);
+    write_filter_txt_line(task.sym_name, task.sym_count, task.root_addr, task.sym_start,
+                          offset_stack, shared.out_f);
 }
 
 // 递归收集偏移并验证
@@ -883,12 +1302,19 @@ static int do_filter(scan_params &p)
 {
     normalize_scan_params(p);
 
-    // 输入 bin 文件
-    std::string bin_path = normalize_path_in_base_dir(p.output, "BaseSniper_result.bin");
-    std::string input = read_line("[?] 输入 .bin 文件名 (固定目录: /sdcard/BaseSniper) [" +
-                                  std::string(path_filename(bin_path.c_str())) + "]: ");
+    // 输入过滤源文件
+    std::string source_path = normalize_path_in_base_dir(p.output, "BaseSniper_result.bin");
+    std::string input = read_line("[?] 输入过滤源文件名 (.bin/.txt，固定目录: /sdcard/BaseSniper) [" +
+                                  std::string(path_filename(source_path.c_str())) + "]: ");
     if (!input.empty())
-        bin_path = normalize_path_in_base_dir(input, "BaseSniper_result.bin");
+        source_path = normalize_path_in_base_dir(input, "BaseSniper_result.bin");
+
+    bool source_is_txt = has_file_ext(source_path, ".txt");
+    bool source_is_bin = has_file_ext(source_path, ".bin");
+    if (!source_is_txt && !source_is_bin) {
+        fprintf(stderr, "[!] 仅支持 .bin 或 .txt 作为过滤源: %s\n", source_path.c_str());
+        return 1;
+    }
 
     // 输入新的目标地址
     input = read_line("[?] 输入新的目标地址 (十六进制): ");
@@ -899,11 +1325,17 @@ static int do_filter(scan_params &p)
     uint64_t target_addr = strtoull(input.c_str(), nullptr, 16);
 
     // 选择验证模式
-    printf("\n  验证模式:\n");
-    printf("  [1] 静态验证 - 仅比对 .bin 中记录的最终地址 (离线，不需要目标进程)\n");
-    printf("  [2] 运行时验证 - 实时读取目标进程内存逐级验证 (需要目标进程运行中)\n");
-    input = read_line("\n  请选择 [1]: ");
-    bool runtime_mode = (input == "2");
+    bool runtime_mode = false;
+    if (source_is_txt) {
+        runtime_mode = true;
+        printf("\n[*] 检测到 txt 过滤源，仅支持运行时验证模式\n");
+    } else {
+        printf("\n  验证模式:\n");
+        printf("  [1] 静态验证 - 仅比对 .bin 中记录的最终地址 (离线，不需要目标进程)\n");
+        printf("  [2] 运行时验证 - 实时读取目标进程内存逐级验证 (需要目标进程运行中)\n");
+        input = read_line("\n  请选择 [1]: ");
+        runtime_mode = (input == "2");
+    }
 
     // 如果运行时验证，需要确保 PID 已设置
     if (runtime_mode) {
@@ -923,31 +1355,91 @@ static int do_filter(scan_params &p)
             }
             memtool::base::target_pid = atoi(input.c_str());
         }
+        memtool::base::configure_rw_backend(p.use_kernel_rw, p.kernel_rw_mode);
         printf("[*] PID: %d\n", memtool::base::target_pid);
     }
 
+    // 输出格式
+    filter_output_mode output_mode = FILTER_OUTPUT_TXT;
+    if (source_is_txt) {
+        printf("\n[*] txt 过滤源当前仅支持输出 txt\n");
+    } else {
+        printf("\n  输出格式:\n");
+        printf("  [1] 压缩格式 (.bin，可再次格式化)\n");
+        printf("  [2] txt 格式 (仅保留指针偏移链)\n");
+        input = read_line("\n  请选择 [2]: ");
+        output_mode = (input == "1") ? FILTER_OUTPUT_BIN : FILTER_OUTPUT_TXT;
+    }
+
     // 输出文件
-    std::string default_out = DEFAULT_FILTER_PATH;
+    std::string default_out = output_mode == FILTER_OUTPUT_BIN ? DEFAULT_FILTER_BIN_PATH : DEFAULT_FILTER_PATH;
 
     input = read_line("[?] 输出文件名 (固定目录: /sdcard/BaseSniper) [" +
                       std::string(path_filename(default_out.c_str())) + "]: ");
     std::string out_path = input.empty()
                            ? default_out
-                           : normalize_path_in_base_dir(input, "BaseSniper_result_filtered.txt");
+                           : normalize_path_in_base_dir(input, output_mode == FILTER_OUTPUT_BIN
+                                                                ? "BaseSniper_result_filtered.bin"
+                                                                : "BaseSniper_result_filtered.txt");
 
     if (!ensure_parent_dir(out_path.c_str())) {
         fprintf(stderr, "[!] 无法创建输出目录: %s\n", out_path.c_str());
         return 1;
     }
 
-    // 打开 bin 文件
-    FILE *fin = fopen(bin_path.c_str(), "rb+");
-    if (fin == nullptr) {
-        fprintf(stderr, "[!] 无法打开文件: %s\n", bin_path.c_str());
+    FILE *fout = fopen(out_path.c_str(), output_mode == FILTER_OUTPUT_BIN ? "wb+" : "w+");
+    if (fout == nullptr) {
+        fprintf(stderr, "[!] 无法创建输出文件: %s\n", out_path.c_str());
         return 1;
     }
 
-    // 解析 bin 数据
+    if (runtime_mode && output_mode == FILTER_OUTPUT_TXT)
+        setvbuf(fout, nullptr, _IONBF, 0);
+
+    size_t valid_count = 0;
+    size_t total_count = 0;
+
+    if (source_is_txt) {
+        printf("[*] 正在解析 txt 数据...\n");
+        fflush(stdout);
+
+        memtool::extend::get_target_mem();
+        auto entries = load_txt_chain_entries(source_path);
+        if (entries.empty()) {
+            fclose(fout);
+            fprintf(stderr, "[!] txt 中没有可过滤的链: %s\n", source_path.c_str());
+            return 1;
+        }
+
+        printf("[*] 过滤中... 目标地址: 0x%" PRIx64 " 模式: 运行时验证 (txt 源)\n", target_addr);
+        for (const auto &entry : entries) {
+            ++total_count;
+            uint64_t root_addr = 0;
+            if (!verify_txt_chain_runtime(entry, target_addr, root_addr))
+                continue;
+
+            write_filter_txt_line(entry.sym_name.c_str(), entry.sym_count, root_addr,
+                                  root_addr - entry.root_offset, entry.offsets, fout);
+            ++valid_count;
+        }
+
+        fclose(fout);
+        printf("[*] 总链数: %zu, 有效链数: %zu\n", total_count, valid_count);
+        if (valid_count > 0)
+            printf("[*] 结果已保存到: %s\n", out_path.c_str());
+        else
+            printf("[*] 未找到有效链\n");
+        printf("[*] 完成\n");
+        return 0;
+    }
+
+    FILE *fin = fopen(source_path.c_str(), "rb+");
+    if (fin == nullptr) {
+        fclose(fout);
+        fprintf(stderr, "[!] 无法打开文件: %s\n", source_path.c_str());
+        return 1;
+    }
+
     printf("[*] 正在解析 bin 数据...\n");
     fflush(stdout);
 
@@ -958,22 +1450,10 @@ static int do_filter(scan_params &p)
     auto &syms = chain_data.syms;
     auto &contents = chain_data.contents;
 
-    FILE *fout = fopen(out_path.c_str(), "w+");
-    if (fout == nullptr) {
-        fprintf(stderr, "[!] 无法创建输出文件: %s\n", out_path.c_str());
-        return 1;
-    }
-
-    if (runtime_mode)
-        setvbuf(fout, nullptr, _IONBF, 0);
-
     printf("[*] 过滤中... 目标地址: 0x%" PRIx64 " 模式: %s\n",
            target_addr, runtime_mode ? "运行时验证" : "静态验证");
 
-    size_t valid_count = 0;
-    size_t total_count = 0;
-
-    if (runtime_mode) {
+    if (runtime_mode && output_mode == FILTER_OUTPUT_TXT) {
         // 运行时验证: 逐级 readv 目标进程
         printf("[*] 正在统计链数...\n");
         fflush(stdout);
@@ -1042,7 +1522,7 @@ static int do_filter(scan_params &p)
 
         total_count = shared.total_count.load(std::memory_order_relaxed);
         valid_count = shared.valid_count.load(std::memory_order_relaxed);
-    } else {
+    } else if (!runtime_mode && output_mode == FILTER_OUTPUT_TXT) {
         // 静态验证: 比对 bin 中记录的最终地址
         for (auto &sym : syms) {
             char s_buf[500];
@@ -1054,6 +1534,63 @@ static int do_filter(scan_params &p)
                                        target_addr, fout, s_buf, valid_count, total_count);
             }
         }
+    } else {
+        std::vector<filtered_runtime_sym> filtered_syms;
+        filtered_syms.reserve(syms.size());
+
+        int max_level = 0;
+        for (const auto &sym : syms) {
+            if (sym.sym->level > max_level)
+                max_level = sym.sym->level;
+        }
+        std::vector<std::vector<chainer::cprog_data<uint64_t>>> filtered_contents((size_t)max_level + 1);
+
+        for (auto &sym : syms) {
+            filtered_runtime_sym filtered_sym;
+            filtered_sym.start = sym.sym->start;
+            filtered_sym.range = sym.sym->range;
+            filtered_sym.count = sym.sym->count;
+            filtered_sym.level = sym.sym->level;
+            filtered_sym.name = sym.sym->name;
+
+            for (auto &dat : sym.data) {
+                ++total_count;
+                if (runtime_mode) {
+                    filtered_runtime_node root;
+                    if (!append_filtered_runtime_node(sym.sym->level, dat, contents, dat.address, target_addr, root))
+                        continue;
+
+                    uint32_t root_index = 0;
+                    flatten_filtered_runtime_node(root, sym.sym->level, filtered_contents, root_index);
+                    filtered_bin_root root_info;
+                    root_info.data.address = root.address;
+                    root_info.data.value = root.value;
+                    root_info.data.start = root_index;
+                    root_info.data.end = root_index + 1;
+                    filtered_sym.roots.emplace_back(std::move(root_info));
+                    ++valid_count;
+                } else {
+                    bool matched = false;
+                    uint32_t root_index = append_filtered_bin_node(sym.sym->level, dat, contents, target_addr,
+                                                                   filtered_contents, matched);
+                    if (!matched)
+                        continue;
+
+                    filtered_bin_root root_info;
+                    root_info.data.address = dat.address;
+                    root_info.data.value = dat.value;
+                    root_info.data.start = root_index;
+                    root_info.data.end = root_index + 1;
+                    filtered_sym.roots.emplace_back(std::move(root_info));
+                    ++valid_count;
+                }
+            }
+
+            if (!filtered_sym.roots.empty())
+                filtered_syms.emplace_back(std::move(filtered_sym));
+        }
+
+        valid_count = write_filtered_bin_file(filtered_syms, filtered_contents, fout);
     }
 
     fclose(fout);
@@ -1083,7 +1620,12 @@ static void print_banner()
 static void print_params(const scan_params &p)
 {
     char addr_buf[32];
+    char link_buf[64];
     snprintf(addr_buf, sizeof(addr_buf), "0x%" PRIx64, p.address);
+    if (p.has_link_range)
+        snprintf(link_buf, sizeof(link_buf), "0x%" PRIx64 "-0x%" PRIx64, p.link_start, p.link_end);
+    else
+        strcpy(link_buf, "(未启用)");
 
     printf("\n  ┌─ 当前参数 ─────────────────────────────┐\n");
     printf("  │  1. 目标:      %-24s │\n", current_target_label(p).c_str());
@@ -1095,8 +1637,10 @@ static void print_params(const scan_params &p)
     printf("  │  7. 块大小:    %-24d │\n", p.block_size);
     printf("  │  8. 内存类型:  %-24s │\n", mem_types_to_string(p.mem_types));
     printf("  │  9. 基址模块:  %-24s │\n", p.base_module.empty() ? "(全部)" : p.base_module.c_str());
-    printf("  │ 10. 输出文件:  %-24s │\n", p.output.c_str());
-    printf("  │ 11. 格式化:    %-24s │\n", p.format_path.empty() ? "(未启用)" : p.format_path.c_str());
+    printf("  │ 10. 内核读写:  %-24s │\n", kernel_rw_mode_to_string(p.use_kernel_rw, p.kernel_rw_mode));
+    printf("  │ 11. 链路起点:  %-24s │\n", link_buf);
+    printf("  │ 12. 输出文件:  %-24s │\n", p.output.c_str());
+    printf("  │ 13. 格式化:    %-24s │\n", p.format_path.empty() ? "(未启用)" : p.format_path.c_str());
     printf("  └──────────────────────────────────────────┘\n\n");
 }
 
@@ -1109,9 +1653,10 @@ static void interactive_set_params(scan_params &p)
             "  [1]  设置目标          [7]  设置块大小\n"
             "  [2]  设置目标地址      [8]  设置内存类型\n"
             "  [3]  设置层级          [9]  设置基址模块\n"
-            "  [4]  设置最小层级      [10] 设置输出文件\n"
-            "  [5]  设置偏移          [11] 设置格式化文件\n"
+            "  [4]  设置最小层级      [10] 设置内核读写\n"
+            "  [5]  设置偏移          [11] 设置链路起点\n"
             "  [6]  设置线程数\n"
+            "  [12] 设置输出文件      [13] 设置格式化文件\n"
             "  [s]  保存配置          [l]  加载配置\n"
             "  [0]  返回上级菜单\n"
             "\n");
@@ -1159,11 +1704,45 @@ static void interactive_set_params(scan_params &p)
             if (!input.empty())
                 set_base_module_filter(p, input);
         } else if (choice == "10") {
+            input = read_line(std::string("  内核读写模式 [") + kernel_rw_mode_to_string(p.use_kernel_rw, p.kernel_rw_mode) +
+                              "] (off/dev/hook): ");
+            if (!input.empty()) {
+                std::string rw = trim_string(input);
+                if (rw == "off" || rw == "0" || rw == "false") {
+                    p.use_kernel_rw = false;
+                } else {
+                    int mode = p.kernel_rw_mode;
+                    if (!parse_kernel_rw_mode(rw, mode))
+                        fprintf(stderr, "  [!] 无效模式，保持原值\n");
+                    else {
+                        p.use_kernel_rw = true;
+                        p.kernel_rw_mode = mode;
+                    }
+                }
+            }
+        } else if (choice == "11") {
+            char buf[64];
+            if (p.has_link_range)
+                snprintf(buf, sizeof(buf), "0x%" PRIx64 "-0x%" PRIx64, p.link_start, p.link_end);
+            else
+                strcpy(buf, "未启用");
+
+            input = read_line(std::string("  链路起点范围 (十六进制, 例 0x1000-0x2000，输入 off 清除) [") + buf + "]: ");
+            if (!input.empty()) {
+                if (input == "off" || input == "OFF" || input == "0") {
+                    p.has_link_range = false;
+                } else if (!parse_address_range_text(input, p.link_start, p.link_end)) {
+                    fprintf(stderr, "  [!] 范围格式错误，保持原值\n");
+                } else {
+                    p.has_link_range = true;
+                }
+            }
+        } else if (choice == "12") {
             input = read_line("  输出文件名 (固定保存到 /sdcard/BaseSniper) [" +
                               std::string(path_filename(p.output.c_str())) + "]: ");
             if (!input.empty())
                 p.output = normalize_path_in_base_dir(input, "BaseSniper_result.bin");
-        } else if (choice == "11") {
+        } else if (choice == "13") {
             input = read_line("  格式化文件名 (固定保存到 /sdcard/BaseSniper) [" +
                               (p.format_path.empty() ? std::string("未启用") : std::string(path_filename(p.format_path.c_str()))) + "]: ");
             if (!input.empty())
@@ -1275,6 +1854,9 @@ int main(int argc, char *argv[])
         {"package",    required_argument, 0, 'p'},
         {"pid",        required_argument, 0, 'P'},
         {"address",    required_argument, 0, 'a'},
+        {"link-range", required_argument, 0, 'R'},
+        {"kernel-rw",  required_argument, 0, 'k'},
+        {"no-kernel-rw", no_argument,     0, 'K'},
         {"depth",      required_argument, 0, 'd'},
         {"min-level",  required_argument, 0, 'L'},
         {"range",      required_argument, 0, 'r'},
@@ -1289,11 +1871,14 @@ int main(int argc, char *argv[])
     };
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "p:P:a:d:L:r:t:s:M:m:o:f:h", long_options, nullptr)) != -1) {
+    while ((opt = getopt_long(argc, argv, "p:P:a:R:k:Kd:L:r:t:s:M:m:o:f:h", long_options, nullptr)) != -1) {
         switch (opt) {
             case 'p': p.package     = optarg; break;
             case 'P': p.pid         = atoi(optarg); break;
             case 'a': p.address     = strtoull(optarg, nullptr, 16); p.has_address = true; break;
+            case 'R': p.has_link_range = parse_address_range_text(optarg, p.link_start, p.link_end); if (!p.has_link_range) { fprintf(stderr, "[!] Invalid --link-range: %s\n", optarg); return 1; } break;
+            case 'k': p.use_kernel_rw = parse_kernel_rw_mode(optarg, p.kernel_rw_mode); if (!p.use_kernel_rw) { fprintf(stderr, "[!] Invalid --kernel-rw: %s\n", optarg); return 1; } break;
+            case 'K': p.use_kernel_rw = false; break;
             case 'd': p.depth       = atoi(optarg); break;
             case 'L': p.min_level   = atoi(optarg); break;
             case 'r': p.offset      = strtoull(optarg, nullptr, 10); break;

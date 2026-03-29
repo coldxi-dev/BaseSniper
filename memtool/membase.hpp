@@ -6,6 +6,21 @@
 
 #include "membase.h"
 
+inline void memtool::base::configure_rw_backend(bool enable_kernel, int mode)
+{
+    use_kernel_rw = enable_kernel;
+    kernel_rw_mode = mode;
+
+    if (!use_kernel_rw)
+        return;
+
+    if (kernel_rw_mode < 1 || kernel_rw_mode > 2)
+        kernel_rw_mode = 1;
+
+    kernel_tool.setPid(target_pid);
+    kernel_tool.setMode(kernel_rw_mode);
+}
+
 template <typename T>
 inline bool memtool::base::is_physical_addr(T addr)
 {
@@ -48,6 +63,10 @@ template <typename T, typename S>
 inline T memtool::base::readv(S addr)
 {
     T temp;
+    if (use_kernel_rw) {
+        kernel_tool.read((uintptr_t)addr, &temp, sizeof(T));
+        return temp;
+    }
     mem_local->iov_base = &temp;
     mem_local->iov_len = sizeof(T);
     mem_remote->iov_base = reinterpret_cast<void *>(addr);
@@ -59,6 +78,9 @@ inline T memtool::base::readv(S addr)
 template <typename S, typename T>
 inline long memtool::base::readv(S addr, T *data)
 {
+    if (use_kernel_rw)
+        return kernel_tool.read((uintptr_t)addr, data, sizeof(T)) ? (long)sizeof(T) : -1;
+
     mem_local->iov_base = data;
     mem_local->iov_len = sizeof(T);
     mem_remote->iov_base = reinterpret_cast<void *>(addr);
@@ -69,6 +91,9 @@ inline long memtool::base::readv(S addr, T *data)
 template <class S>
 inline long memtool::base::readv(S addr, void *data, size_t size)
 {
+    if (use_kernel_rw)
+        return kernel_tool.read((uintptr_t)addr, data, size) ? (long)size : -1;
+
     mem_local->iov_base = data;
     mem_local->iov_len = size;
     mem_remote->iov_base = reinterpret_cast<void *>(addr);
@@ -79,6 +104,9 @@ inline long memtool::base::readv(S addr, void *data, size_t size)
 template <typename S, typename T>
 inline long memtool::base::writev(S addr, T data)
 {
+    if (use_kernel_rw)
+        return kernel_tool.write((uintptr_t)addr, &data, sizeof(T)) ? (long)sizeof(T) : -1;
+
     mem_local->iov_base = &data;
     mem_local->iov_len = sizeof(T);
     mem_remote->iov_base = reinterpret_cast<void *>(addr);
@@ -89,6 +117,9 @@ inline long memtool::base::writev(S addr, T data)
 template <class S>
 inline long memtool::base::writev(S addr, void *data, size_t size)
 {
+    if (use_kernel_rw)
+        return kernel_tool.write((uintptr_t)addr, data, size) ? (long)size : -1;
+
     mem_local->iov_base = data;
     mem_local->iov_len = size;
     mem_remote->iov_base = reinterpret_cast<void *>(addr);

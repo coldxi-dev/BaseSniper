@@ -935,6 +935,72 @@ chainer/CMakeFiles/chainer.dir/ccformat.cpp.o: \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/unistd.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/glibc-syscalls.h \
   /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/uio.h \
+  /home/coldxi/Project/cfindBase/memtool/readtool.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/fstream \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/filesystem \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/copy_options.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_entry.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_status.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_type.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/perms.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/file_time_type.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/filesystem_error.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/path.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iomanip \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/operations.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/perm_options.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/space_info.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_iterator.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/directory_options.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/path_iterator.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/__filesystem/u8path.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1/iostream \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/prctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/prctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/sockios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/sockios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/sockios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sockaddr_storage.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/sa_family_t.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/ioctl.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/termios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/termios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termios.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/termbits.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termbits.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/termbits-common.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/ioctls.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/ioctls.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/tty.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/arpa/inet.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netinet/in.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/endian.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/endian.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netinet/in6.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/in6.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/libc-compat.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/in.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ip_msfilter.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/in_addr.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/ip_mreq_source.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/socket.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/byteorder.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/byteorder/little_endian.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/swab.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm/swab.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/asm-generic/swab.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/ipv6.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/netdb.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/input.h \
+  /home/coldxi/ndk/android-ndk-r27/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/linux/input-event-codes.h \
   /home/coldxi/Project/cfindBase/memtool/memsetting.h \
   /home/coldxi/Project/cfindBase/memtool/membase.hpp \
   /home/coldxi/Project/cfindBase/memtool/memextend.hpp \

@@ -16,6 +16,8 @@
 #include <sys/user.h> // for PAGE_SIZE
 #include <unistd.h>
 
+#include "readtool.h"
+
 #include "memsetting.h"
 
 namespace memtool
@@ -43,12 +45,17 @@ protected:
 
 public:
     static inline pid_t target_pid = -1;
+    static inline bool use_kernel_rw = false;
+    static inline int kernel_rw_mode = 1;
+    static inline readtool kernel_tool {};
 
     static int get_package_uid(const char *package);
 
     static int get_pid_by_uid(int uid);
 
     static int get_pid(const char *package);
+
+    static void configure_rw_backend(bool enable_kernel, int mode);
 
     static int judge_target_bit(pid_t pid);
 
