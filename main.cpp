@@ -851,22 +851,71 @@ static std::vector<txt_chain_entry> load_txt_chain_entries(const std::string &pa
     return entries;
 }
 
-static memtool::vm_static_data *find_static_module_by_name_count(const txt_chain_entry &entry)
+static memtool::vm_static_data *find_runtime_module_by_name_count(
+    const char *sym_name,
+    int sym_count,
+    uint64_t root_offset)
 {
+    memtool::vm_static_data *exact = nullptr;
+    size_t exact_matches = 0;
+    memtool::vm_static_data *fallback = nullptr;
+    size_t fallback_matches = 0;
+
     for (auto *module : memtool::extend::vm_static_list) {
-        if (strcmp(module->name, entry.sym_name.c_str()) == 0 && module->count == entry.sym_count)
-            return module;
+        if (strcmp(module->name, sym_name) != 0)
+            continue;
+
+        size_t module_size = module->end > module->start ? module->end - module->start : 0;
+        if (root_offset >= module_size)
+            continue;
+
+        ++fallback_matches;
+        if (fallback_matches == 1)
+            fallback = module;
+
+        if (module->count == sym_count) {
+            ++exact_matches;
+            if (exact_matches == 1)
+                exact = module;
+        }
     }
+
+    if (exact_matches == 1)
+        return exact;
+    if (fallback_matches == 1)
+        return fallback;
+
     return nullptr;
+}
+
+static bool resolve_runtime_root_from_sym(
+    const char *sym_name,
+    int sym_count,
+    uint64_t saved_sym_start,
+    uint64_t saved_root_addr,
+    uint64_t &root_addr,
+    uint64_t &sym_start)
+{
+    if (saved_root_addr < saved_sym_start)
+        return false;
+
+    uint64_t root_offset = saved_root_addr - saved_sym_start;
+    auto *module = find_runtime_module_by_name_count(sym_name, sym_count, root_offset);
+    if (module == nullptr)
+        return false;
+
+    root_addr = module->start + root_offset;
+    sym_start = module->start;
+    return root_addr >= module->start && root_addr < module->end;
 }
 
 static bool verify_txt_chain_runtime(const txt_chain_entry &entry, uint64_t target_addr, uint64_t &root_addr)
 {
-    auto *module = find_static_module_by_name_count(entry);
-    if (module == nullptr)
+    uint64_t sym_start = 0;
+    if (!resolve_runtime_root_from_sym(entry.sym_name.c_str(), entry.sym_count,
+                                       0, entry.root_offset, root_addr, sym_start))
         return false;
 
-    root_addr = module->start + entry.root_offset;
     uint64_t current_addr = root_addr;
     for (size_t off : entry.offsets) {
         uint64_t value = 0;
@@ -897,45 +946,28 @@ static void write_filter_txt_line(
     fwrite(buf, pos, 1, out_f);
 }
 
-static uint32_t append_filtered_bin_node(
+static bool append_filtered_static_node(
     int level,
     const chainer::cprog_data<uint64_t> &dat,
     const std::vector<utils::varray<chainer::cprog_data<uint64_t>>> &contents,
     uint64_t target_addr,
-    std::vector<std::vector<chainer::cprog_data<uint64_t>>> &filtered_contents,
-    bool &matched)
+    filtered_runtime_node &out)
 {
-    chainer::cprog_data<uint64_t> out = dat;
+    out.address = dat.address;
+    out.value = dat.value;
 
-    if (level == 0) {
-        matched = dat.address == target_addr;
-        if (!matched)
-            return 0;
+    if (level == 0)
+        return dat.address == target_addr;
 
-        out.start = 0;
-        out.end = 0;
-        filtered_contents[0].push_back(out);
-        return (uint32_t)(filtered_contents[0].size() - 1);
-    }
-
-    std::vector<uint32_t> child_indexes;
-    child_indexes.reserve(dat.end - dat.start);
+    out.children.clear();
+    out.children.reserve(dat.end - dat.start);
     for (uint32_t i = dat.start; i < dat.end; ++i) {
-        bool child_matched = false;
-        uint32_t child_index = append_filtered_bin_node(level - 1, contents[level - 1][i], contents,
-                                                        target_addr, filtered_contents, child_matched);
-        if (child_matched)
-            child_indexes.push_back(child_index);
+        filtered_runtime_node child;
+        if (append_filtered_static_node(level - 1, contents[level - 1][i], contents, target_addr, child))
+            out.children.emplace_back(std::move(child));
     }
 
-    matched = !child_indexes.empty();
-    if (!matched)
-        return 0;
-
-    out.start = child_indexes.front();
-    out.end = child_indexes.back() + 1;
-    filtered_contents[level].push_back(out);
-    return (uint32_t)(filtered_contents[level].size() - 1);
+    return !out.children.empty();
 }
 
 static bool append_filtered_runtime_node(
@@ -970,7 +1002,7 @@ static bool append_filtered_runtime_node(
     return !out.children.empty();
 }
 
-static void flatten_filtered_runtime_node(
+static void flatten_filtered_runtime_subnode(
     const filtered_runtime_node &node,
     int level,
     std::vector<std::vector<chainer::cprog_data<uint64_t>>> &filtered_contents,
@@ -993,7 +1025,7 @@ static void flatten_filtered_runtime_node(
     bool has_child = false;
     for (const auto &child : node.children) {
         uint32_t child_index = 0;
-        flatten_filtered_runtime_node(child, level - 1, filtered_contents, child_index);
+        flatten_filtered_runtime_subnode(child, level - 1, filtered_contents, child_index);
         if (!has_child) {
             start = child_index;
             has_child = true;
@@ -1005,6 +1037,38 @@ static void flatten_filtered_runtime_node(
     out.end = end;
     filtered_contents[level].push_back(out);
     out_index = (uint32_t)(filtered_contents[level].size() - 1);
+}
+
+static void fill_filtered_root_data(
+    const filtered_runtime_node &root,
+    int level,
+    std::vector<std::vector<chainer::cprog_data<uint64_t>>> &filtered_contents,
+    chainer::cprog_data<uint64_t> &out)
+{
+    out.address = root.address;
+    out.value = root.value;
+
+    if (level == 0) {
+        out.start = 0;
+        out.end = 0;
+        return;
+    }
+
+    uint32_t start = 0;
+    uint32_t end = 0;
+    bool has_child = false;
+    for (const auto &child : root.children) {
+        uint32_t child_index = 0;
+        flatten_filtered_runtime_subnode(child, level - 1, filtered_contents, child_index);
+        if (!has_child) {
+            start = child_index;
+            has_child = true;
+        }
+        end = child_index + 1;
+    }
+
+    out.start = start;
+    out.end = end;
 }
 
 static size_t write_filtered_bin_file(
@@ -1356,6 +1420,10 @@ static int do_filter(scan_params &p)
             memtool::base::target_pid = atoi(input.c_str());
         }
         memtool::base::configure_rw_backend(p.use_kernel_rw, p.kernel_rw_mode);
+        if (memtool::extend::get_target_mem() != 0) {
+            fprintf(stderr, "[!] 无法读取目标进程内存布局\n");
+            return 1;
+        }
         printf("[*] PID: %d\n", memtool::base::target_pid);
     }
 
@@ -1403,7 +1471,6 @@ static int do_filter(scan_params &p)
         printf("[*] 正在解析 txt 数据...\n");
         fflush(stdout);
 
-        memtool::extend::get_target_mem();
         auto entries = load_txt_chain_entries(source_path);
         if (entries.empty()) {
             fclose(fout);
@@ -1468,12 +1535,19 @@ static int do_filter(scan_params &p)
         tasks.reserve(task_count);
         for (auto &sym : syms) {
             for (auto &dat : sym.data) {
+                uint64_t runtime_root_addr = 0;
+                uint64_t runtime_sym_start = 0;
+                if (!resolve_runtime_root_from_sym(sym.sym->name, sym.sym->count,
+                                                   sym.sym->start, dat.address,
+                                                   runtime_root_addr, runtime_sym_start))
+                    continue;
+
                 size_t subtree_total = get_runtime_chain_count_for_node(sym.sym->level, dat, subtree_counts);
                 tasks.push_back(runtime_filter_task {
                     sym.sym->level,
                     &dat,
-                    dat.address,
-                    sym.sym->start,
+                    runtime_root_addr,
+                    runtime_sym_start,
                     sym.sym->name,
                     sym.sym->count,
                     subtree_total,
@@ -1556,31 +1630,28 @@ static int do_filter(scan_params &p)
             for (auto &dat : sym.data) {
                 ++total_count;
                 if (runtime_mode) {
-                    filtered_runtime_node root;
-                    if (!append_filtered_runtime_node(sym.sym->level, dat, contents, dat.address, target_addr, root))
+                    uint64_t runtime_root_addr = 0;
+                    uint64_t runtime_sym_start = 0;
+                    if (!resolve_runtime_root_from_sym(sym.sym->name, sym.sym->count,
+                                                       sym.sym->start, dat.address,
+                                                       runtime_root_addr, runtime_sym_start))
                         continue;
 
-                    uint32_t root_index = 0;
-                    flatten_filtered_runtime_node(root, sym.sym->level, filtered_contents, root_index);
+                    filtered_runtime_node root;
+                    if (!append_filtered_runtime_node(sym.sym->level, dat, contents, runtime_root_addr, target_addr, root))
+                        continue;
+
                     filtered_bin_root root_info;
-                    root_info.data.address = root.address;
-                    root_info.data.value = root.value;
-                    root_info.data.start = root_index;
-                    root_info.data.end = root_index + 1;
+                    fill_filtered_root_data(root, sym.sym->level, filtered_contents, root_info.data);
                     filtered_sym.roots.emplace_back(std::move(root_info));
                     ++valid_count;
                 } else {
-                    bool matched = false;
-                    uint32_t root_index = append_filtered_bin_node(sym.sym->level, dat, contents, target_addr,
-                                                                   filtered_contents, matched);
-                    if (!matched)
+                    filtered_runtime_node root;
+                    if (!append_filtered_static_node(sym.sym->level, dat, contents, target_addr, root))
                         continue;
 
                     filtered_bin_root root_info;
-                    root_info.data.address = dat.address;
-                    root_info.data.value = dat.value;
-                    root_info.data.start = root_index;
-                    root_info.data.end = root_index + 1;
+                    fill_filtered_root_data(root, sym.sym->level, filtered_contents, root_info.data);
                     filtered_sym.roots.emplace_back(std::move(root_info));
                     ++valid_count;
                 }
